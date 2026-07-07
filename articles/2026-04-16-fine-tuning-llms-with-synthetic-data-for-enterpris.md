@@ -27,7 +27,7 @@ Before diving in, ensure you have the following tools and versions installed to 
 - Access to a GPU is recommended for fine-tuning LLMs, but CPU mode works for smaller examples.
 
 ## Introduction
-In today's AI-driven enterprises, fine-tuning large language models (LLMs) is essential for domain-specific customization, but real-world data challenges abound. According to a 2023 Gartner report, 60% of organizations will leverage synthetic data by 2024 to combat data scarcity and privacy issues. This is particularly critical in finance and healthcare, where regulations like GDPR and HIPAA restrict access to sensitive data. From my experience leading LLM deployments, synthetic data isn't just a stopgap—it's a strategic tool for automating workflows, reducing costs, and enhancing model performance.
+In today's AI-driven enterprises, fine-tuning large language models (LLMs) is essential for domain-specific customization, but real-world data challenges abound. According to a 2023 Gartner report, 60% of organizations will leverage synthetic data by 2024 to combat data scarcity and privacy issues. This is particularly critical in finance and healthcare, where regulations like GDPR and HIPAA restrict access to sensitive data. From my experience leading LLM deployments, synthetic data isn't just a stopgap, it's a strategic tool for automating workflows, reducing costs, and enhancing model performance.
 
 In finance, synthetic data helps generate transaction logs for fraud detection without exposing real customer data. In healthcare, it creates anonymized patient notes for tasks like summarization or diagnosis prediction. Over the past two years, I've automated these processes in production, achieving metrics like 95% data utility retention and 30% faster model convergence. This article provides a deep dive into the techniques, code, and lessons that make this possible, empowering you to apply them in your own projects.
 
@@ -52,14 +52,14 @@ real_data = pd.DataFrame({
     'amount': [100.5, 200.0, 50.75, 150.0, 300.25],
     'timestamp': ['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05'],
     'merchant_category': ['grocery', 'online_shopping', 'dining', 'grocery', 'travel'],
-    'is_fraud': [0, 1, 0, 0, 1]  # Binary label for fraud (0: normal, 1: fraud)
+    'is_fraud': [0, 1, 0, 0, 1] # Binary label for fraud (0: normal, 1: fraud)
 })
 
 # Convert timestamp to datetime for CTGAN compatibility
 real_data['timestamp'] = pd.to_datetime(real_data['timestamp'])
 
 # Initialize and train CTGAN model
-ctgan_model = CTGAN(epochs=10)  # In production, increase epochs for better fidelity
+ctgan_model = CTGAN(epochs=10) # In production, increase epochs for better fidelity
 ctgan_model.fit(real_data, discrete_columns=['merchant_category', 'is_fraud'])
 
 # Generate synthetic data: Create 100 new samples
@@ -69,8 +69,8 @@ synthetic_data = ctgan_model.sample(100)
 print(synthetic_data.head())
 
 # Expected output: A DataFrame with similar columns, e.g.,
-#    amount   timestamp merchant_category  is_fraud
-# 0  150.2   2023-01-03     online_shopping        0
+# amount timestamp merchant_category is_fraud
+# 0 150.2 2023-01-03 online_shopping 0
 # (Note: Actual values will vary due to randomness, but distributions should mimic real data)
 ```
 
@@ -94,7 +94,7 @@ real_summaries = [
     {"input_text": "Diagnosed with hypertension after blood pressure reading.", "summary": "Hypertension diagnosis."}
 ]
 
-synthetic_summaries = [  # Hypothetical synthetic data; in practice, use a generator like T5
+synthetic_summaries = [ # Hypothetical synthetic data; in practice, use a generator like T5
     {"input_text": "Individual reported fatigue and headaches.", "summary": "Fatigue and headache complaints."},
     {"input_text": "Screened for diabetes with normal results.", "summary": "Normal diabetes screening."}
 ]
@@ -104,7 +104,7 @@ combined_data = real_summaries + synthetic_summaries
 dataset = Dataset.from_list(combined_data)
 
 # Step 2: Load pre-trained model and tokenizer (using Mistral-7B for summarization)
-model_name = "mistralai/Mistral-7B-v0.1"  # Replace with actual model if needed
+model_name = "mistralai/Mistral-7B-v0.1" # Replace with actual model if needed
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
@@ -119,12 +119,12 @@ tokenized_datasets = dataset.map(tokenize_function, batched=True)
 
 # Step 3: Set up training arguments and trainer
 training_args = TrainingArguments(
-    output_dir="./results",  # Where to save model checkpoints
-    num_train_epochs=3,       # Start small; increase based on data size
-    per_device_train_batch_size=4,  # Adjust for GPU memory
-    warmup_steps=500,         # Helps with initial learning rate stability
-    weight_decay=0.01,        # Regularization to prevent overfitting
-    logging_dir='./logs',     # For monitoring training progress
+    output_dir="./results", # Where to save model checkpoints
+    num_train_epochs=3, # Start small; increase based on data size
+    per_device_train_batch_size=4, # Adjust for GPU memory
+    warmup_steps=500, # Helps with initial learning rate stability
+    weight_decay=0.01, # Regularization to prevent overfitting
+    logging_dir='./logs', # For monitoring training progress
 )
 
 trainer = Trainer(
