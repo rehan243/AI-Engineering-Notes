@@ -28,7 +28,7 @@ The rise of large language models (LLMs) such as OpenAI's GPT-4 has revolutioniz
 - **Cost Constraints**: API calls to commercial LLMs can quickly become cost-prohibitive.
 - **Customization Limits**: Out-of-the-box LLMs often fail on niche business use cases without fine-tuning.
 
-Enter open-source LLMs like **LLaMA 2, Falcon, Mistral, and GPT-J**, which can be fine-tuned to your specific needs. With recent advancements in **Parameter-Efficient Fine-Tuning (PEFT)** and efficient model architectures, it is now possible to deploy secure, high-performing models — without the exorbitant costs or privacy concerns of proprietary APIs.
+Enter open-source LLMs like **LLaMA 2, Falcon, Mistral, and GPT-J**, which can be fine-tuned to your specific needs. With recent advancements in **Parameter-Efficient Fine-Tuning (PEFT)** and efficient model architectures, it is now possible to deploy secure, high-performing models, without the exorbitant costs or privacy concerns of proprietary APIs.
 
 ---
 
@@ -66,7 +66,7 @@ model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, device_map="auto", load
 print(f"Model and tokenizer loaded for {MODEL_NAME}.")
 ```
 
-> **Output**:  
+> **Output**: 
 > `Model and tokenizer loaded for meta-llama/Llama-2-7b-hf.`
 
 ---
@@ -80,11 +80,11 @@ from peft import get_peft_model, LoraConfig, TaskType
 
 # Define LoRA configuration
 lora_config = LoraConfig(
-    task_type=TaskType.CAUSAL_LM,   # Causal language modeling (for GPT-like models)
-    r=8,                           # Low-rank dimension
-    lora_alpha=32,                 # Hyperparameter controlling update scaling
-    lora_dropout=0.1,              # Regularization
-    target_modules=["q_proj", "v_proj"],  # Layers to modify
+    task_type=TaskType.CAUSAL_LM, # Causal language modeling (for GPT-like models)
+    r=8, # Low-rank dimension
+    lora_alpha=32, # Hyperparameter controlling update scaling
+    lora_dropout=0.1, # Regularization
+    target_modules=["q_proj", "v_proj"], # Layers to modify
 )
 
 # Apply LoRA to the model
@@ -92,7 +92,7 @@ lora_model = get_peft_model(model, lora_config)
 lora_model.print_trainable_parameters()
 ```
 
-> **Output**:  
+> **Output**: 
 > `Trainable parameters: 8,388,608 | All parameters: 6,700,000,000 | Trainable: 0.13%`
 
 With just **0.13% of the model parameters** being updated, we greatly reduce the compute and memory requirements for fine-tuning.
@@ -107,7 +107,7 @@ Next, prepare a small dataset for fine-tuning. We'll use the Hugging Face `datas
 from datasets import load_dataset
 
 # Load a sample proprietary dataset
-dataset = load_dataset("yelp_review_full", split="train[:1%]")  # Using 1% of Yelp reviews for demo
+dataset = load_dataset("yelp_review_full", split="train[:1%]") # Using 1% of Yelp reviews for demo
 
 # Tokenize the dataset
 def tokenize_function(examples):
@@ -135,7 +135,7 @@ training_args = TrainingArguments(
     save_total_limit=2,
     save_steps=100,
     learning_rate=2e-4,
-    fp16=True,  # Mixed precision training for faster performance
+    fp16=True, # Mixed precision training for faster performance
     save_strategy="epoch",
 )
 
@@ -156,16 +156,16 @@ trainer.train()
 
 ## Architecture: Secure Deployment for Fine-Tuned Models
 
-Here’s a high-level architecture diagram using ASCII art:
+Here's a high-level architecture diagram using ASCII art:
 
 ```
-+----------------+      +--------------------+      +----------------+
-| Proprietary    |      | Fine-Tuned LLaMA  |      | Inference API  |
-| Dataset        | ---> | 2 with LoRA       | ---> | (FastAPI +     |
-| (Sensitive     |      | Stored in Secure  |      | Docker)        |
-| Data)          |      | Private Cloud     |      |                |
-+----------------+      +--------------------+      +----------------+
-          |                                      |
++----------------+ +--------------------+ +----------------+
+| Proprietary | | Fine-Tuned LLaMA | | Inference API |
+| Dataset | ---> | 2 with LoRA | ---> | (FastAPI + |
+| (Sensitive | | Stored in Secure | | Docker) |
+| Data) | | Private Cloud | | |
++----------------+ +--------------------+ +----------------+
+          | |
           +--------------------------------------+
                        Private Network
 ```
