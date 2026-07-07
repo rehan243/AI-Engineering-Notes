@@ -38,15 +38,15 @@ author: Rehan Malik
 
 ## Introduction
 
-High-dimensional datasets are increasingly common—think genomic data (>20,000 features per sample), NLP embeddings (768+), or IoT sensor streams (hundreds per second). A 2023 [KDnuggets survey](https://www.kdnuggets.com/2023/10/machine-learning-challenges.html) found that **57% of data scientists cite "feature selection in high-dimensional data" as a major bottleneck**, often stalling projects for weeks or months.
+High-dimensional datasets are increasingly common, think genomic data (>20,000 features per sample), NLP embeddings (768+), or IoT sensor streams (hundreds per second). A 2023 [KDnuggets survey](https://www.kdnuggets.com/2023/10/machine-learning-challenges.html) found that **57% of data scientists cite "feature selection in high-dimensional data" as a major bottleneck**, often stalling projects for weeks or months.
 
-**Manual feature engineering and model selection simply don’t scale**. Modern AutoML approaches, leveraging neural architecture search, meta-learning, and automated feature pruning, have emerged as essential tools for quickly building performant models on complex, high-dimensional datasets—with robust, reproducible pipelines.
+**Manual feature engineering and model selection simply don't scale**. Modern AutoML approaches, leveraging neural architecture search, meta-learning, and automated feature pruning, have emerged as essential tools for quickly building performant models on complex, high-dimensional datasets, with robust, reproducible pipelines.
 
 ---
 
 ## Technical Deep Dive
 
-Let’s walk through a practical, end-to-end example using **H2O AutoML** and **auto-sklearn** on a synthetic high-dimensional classification problem.
+Let's walk through a practical, end-to-end example using **H2O AutoML** and **auto-sklearn** on a synthetic high-dimensional classification problem.
 
 ### **Step 1: Simulate High-Dimensional Data**
 
@@ -71,7 +71,7 @@ print(X.shape, y.shape)
 
 ### **Step 2: Baseline Model (No Feature Selection)**
 
-Let’s fit a simple RandomForest with **no feature selection**.
+Let's fit a simple RandomForest with **no feature selection**.
 
 ```python
 from sklearn.ensemble import RandomForestClassifier
@@ -105,11 +105,11 @@ hf = h2o.H2OFrame(df)
 
 # Split into train/test for H2O
 train, test = hf.split_frame([0.8], seed=1)
-x = df.columns[:-1].tolist()  # all columns except target
+x = df.columns[:-1].tolist() # all columns except target
 y_col = 'target'
 
 # Run AutoML
-aml = H2OAutoML(max_runtime_secs=600,  # 10 minutes
+aml = H2OAutoML(max_runtime_secs=600, # 10 minutes
                 max_models=20,
                 seed=1,
                 sort_metric="AUC")
@@ -119,7 +119,7 @@ aml.train(x=x, y=y_col, training_frame=train)
 lb = aml.leaderboard
 print(lb.head())
 ```
-**Typical Results:**  
+**Typical Results:** 
 In tests, H2OAutoML reduced the feature space from 2000 to **~40-60 effective features** (via internal pruning) with **F1 gain of 8-14%** over the untuned baseline.
 
 ---
@@ -136,7 +136,7 @@ from sklearn.metrics import f1_score
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 automl = autosklearn.classification.AutoSklearnClassifier(
-    time_left_for_this_task=600,  # 10 minutes
+    time_left_for_this_task=600, # 10 minutes
     per_run_time_limit=60,
     ensemble_size=10,
     seed=42
@@ -149,7 +149,7 @@ print("auto-sklearn F1:", f1_score(y_test, y_pred))
 # Example Output: auto-sklearn F1: 0.872
 ```
 
-**Observation:**  
+**Observation:** 
 auto-sklearn often selects pipelines with built-in feature selectors (e.g., SelectFromModel, L1-based FS), reducing dimensionality by **80-95%**.
 
 ---
@@ -163,13 +163,13 @@ auto-sklearn often selects pipelines with built-in feature selectors (e.g., Sele
       |
       v
 [AutoML: Feature Preprocessing]
-   |    - Redundancy detection (correlation, variance)
-   |    - Automated feature selection (L1/L2, tree importances)
-   |    - Dimensionality reduction (PCA, autoencoders)
+   | - Redundancy detection (correlation, variance)
+   | - Automated feature selection (L1/L2, tree importances)
+   | - Dimensionality reduction (PCA, autoencoders)
    v
 [AutoML: Model Search & Hyperparameter Tuning]
-   |    - Model selection (RF, XGBoost, deep nets, etc.)
-   |    - NAS for deep architectures
+   | - Model selection (RF, XGBoost, deep nets, etc.)
+   | - NAS for deep architectures
    v
 [AutoML: Ensembling/Stacking]
       |
@@ -177,8 +177,8 @@ auto-sklearn often selects pipelines with built-in feature selectors (e.g., Sele
 [Best Model]
 ```
 
-**Key Insight:**  
-AutoML orchestrates **feature pruning, reduction, model selection, and stacking** in a reproducible, performant pipeline—breaking the human bottleneck for high-dimensional ML.
+**Key Insight:** 
+AutoML orchestrates **feature pruning, reduction, model selection, and stacking** in a reproducible, performant pipeline, breaking the human bottleneck for high-dimensional ML.
 
 ---
 
@@ -186,20 +186,20 @@ AutoML orchestrates **feature pruning, reduction, model selection, and stacking*
 
 ### From Experience (Genomics/Text/IoT):
 
-- **AutoML reduced manual feature selection from weeks to hours.** On a real genomics project (22,000 features, 4,000 samples), H2O AutoML delivered a top-5 leaderboard in 2 hours, matching a domain expert’s 3-week effort (±2% in AUC).
+- **AutoML reduced manual feature selection from weeks to hours.** On a real genomics project (22,000 features, 4,000 samples), H2O AutoML delivered a top-5 leaderboard in 2 hours, matching a domain expert's 3-week effort (±2% in AUC).
 - **Memory can bottleneck AutoML runs.** For >20,000 features, plan for at least **24GB RAM** or use cloud-based tools. Out-of-memory errors are common in large AutoML sweeps.
-- **AutoML identifies robust pipelines:** In one text classification project (BERT embeddings, 2000 features), auto-sklearn’s best pipeline used only 62 features with 14% F1 improvement over a hand-crafted SVM pipeline.
-- **Interpretability is improved!** Because many AutoML tools now log feature importances, it’s often easier to explain the final model—even for deeply pruned feature spaces.
+- **AutoML identifies robust pipelines:** In one text classification project (BERT embeddings, 2000 features), auto-sklearn's best pipeline used only 62 features with 14% F1 improvement over a hand-crafted SVM pipeline.
+- **Interpretability is improved!** Because many AutoML tools now log feature importances, it's often easier to explain the final model, even for deeply pruned feature spaces.
 
 ---
 
 ## Key Takeaways
 
-1. **Let AutoML do the heavy lifting for high-dimensional feature engineering**—automated selection can shrink irrelevant/noisy features by >80%.
-2. **AutoML’s model search and NAS can boost accuracy by 10-25%** on high-dimensional data, compared to untuned baselines.
+1. **Let AutoML do the heavy lifting for high-dimensional feature engineering**, automated selection can shrink irrelevant/noisy features by >80%.
+2. **AutoML's model search and NAS can boost accuracy by 10-25%** on high-dimensional data, compared to untuned baselines.
 3. **Production deployment requires attention to memory and runtime.** For very wide data, leverage cloud or distributed AutoML frameworks.
 4. **Interpretability is not lost:** Modern AutoML tools offer feature importance and selection transparency.
-5. **Start with AutoML for benchmarks and iterate:** Even if not using the final pipeline, you’ll identify key features/models within hours—not weeks.
+5. **Start with AutoML for benchmarks and iterate:** Even if not using the final pipeline, you'll identify key features/models within hours, not weeks.
 
 ---
 
