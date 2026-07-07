@@ -7,7 +7,7 @@ date: 2023-10-02
 ---
 ```
 
-# Efficient Fine-Tuning of Foundation Models in Production Settings  
+# Efficient Fine-Tuning of Foundation Models in Production Settings 
 ## From Zero to Custom: Practical Recipes for Fine-Tuning LLMs and Vision Models Without Breaking the Bank
 
 ![Efficient Fine-Tuning of Foundation Models in Production Settings](../images/efficient-fine-tuning-of-foundation-mode.jpg)
@@ -25,9 +25,9 @@ date: 2023-10-02
 
 ## Introduction
 
-Foundation models like OpenAI's GPT, Google's BERT, and CLIP have democratized AI by providing powerful, pre-trained architectures that can serve as starting points for a multitude of tasks. However, fine-tuning such models for **specific downstream applications** is often resource-intensive, requiring significant compute power and large datasets.  
+Foundation models like OpenAI's GPT, Google's BERT, and CLIP have democratized AI by providing powerful, pre-trained architectures that can serve as starting points for a multitude of tasks. However, fine-tuning such models for **specific downstream applications** is often resource-intensive, requiring significant compute power and large datasets. 
 
-With the emergence of **parameter-efficient fine-tuning (PEFT)** techniques, it is now possible to adapt these gigantic models to niche tasks without incurring prohibitive costs—for instance:
+With the emergence of **parameter-efficient fine-tuning (PEFT)** techniques, it is now possible to adapt these gigantic models to niche tasks without incurring prohibitive costs, for instance:
 - **LoRA** reduced fine-tuning memory usage by **70%** in our enterprise chat solution.
 - Using **Adapters**, we achieved task-specific adaptation with only **10% of the trainable parameters**.
 
@@ -55,7 +55,7 @@ pip install torch transformers datasets accelerate
 
 ## Technical Deep Dive: Fine-Tuning Recipes
 
-We'll cover two examples: fine-tuning a **language model** using LoRA and a **vision model** using Adapters.  
+We'll cover two examples: fine-tuning a **language model** using LoRA and a **vision model** using Adapters. 
 
 ### Example 1: Fine-Tuning GPT-like LLMs with LoRA
 
@@ -74,9 +74,9 @@ tokenizer = AutoTokenizer.from_pretrained(base_model)
 
 # 3. Define LoRA configuration
 lora_config = LoraConfig(
-    r=8,                      # Rank (low-rank dimension)
-    lora_alpha=16,            # Scaling factor
-    target_modules=["q_proj", "v_proj"],  # Specify trainable layers
+    r=8, # Rank (low-rank dimension)
+    lora_alpha=16, # Scaling factor
+    target_modules=["q_proj", "v_proj"], # Specify trainable layers
     lora_dropout=0.1,
     bias="none",
 )
@@ -144,7 +144,7 @@ model.train_adapter("custom-task")
 
 # 4. Prepare dataset
 from datasets import load_dataset
-dataset = load_dataset("beans")  # Example dataset for image classification
+dataset = load_dataset("beans") # Example dataset for image classification
 def preprocess_images(example):
     example["pixel_values"] = feature_extractor(example["image"], return_tensors="pt")['pixel_values'][0]
     return example
@@ -182,17 +182,17 @@ In production settings, scaling fine-tuning workflows requires careful optimizat
 
 ```plaintext
 +-----------------------------------+
-|        Pre-trained Base Model     |
-|  (e.g., GPT2, ViT - Frozen Weights) |
+| Pre-trained Base Model |
+| (e.g., GPT2, ViT - Frozen Weights) |
 +-----------------------------------+
                   |
     +-------------------------------+
-    |   Task-Specific Fine-Tuning   |
-    |   (LoRA, Adapters, Prompts)   |
+    | Task-Specific Fine-Tuning |
+    | (LoRA, Adapters, Prompts) |
     +-------------------------------+
                   |
    +-----------------------------------+
-   |  Deployment (Inference Pipeline) |
+   | Deployment (Inference Pipeline) |
    +-----------------------------------+
 ```
 
