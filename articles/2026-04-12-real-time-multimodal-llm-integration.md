@@ -16,15 +16,15 @@ As a Senior AI/ML Engineer with years of hands-on experience deploying AI system
 
 ## Introduction: Why Latency Optimization Matters Now
 
-In today's fast-paced digital world, multimodal LLMs are revolutionizing customer support by enabling systems to process text queries alongside images—think a user uploading a photo of a defective product and getting an instant, context-aware response. Models like OpenAI's GPT-4, LLaVA, or Flamingo have made this possible by integrating visual encoders (e.g., CLIP or ViT) with transformer-based language models, allowing for unified handling of multiple data modalities.
+In today's fast-paced digital world, multimodal LLMs are revolutionizing customer support by enabling systems to process text queries alongside images, think a user uploading a photo of a defective product and getting an instant, context-aware response. Models like OpenAI's GPT-4, LLaVA, or Flamingo have made this possible by integrating visual encoders (e.g., CLIP or ViT) with transformer-based language models, allowing for unified handling of multiple data modalities.
 
-But here's the catch: these models are computationally hungry. In real-time applications, where response times need to be under 500ms to feel instantaneous, unoptimized LLMs often introduce delays that frustrate users and increase operational costs. From my experience leading deployments for e-commerce platforms, I've seen latency spikes turn a promising AI feature into a liability. With the rise of edge computing and the demand for AI in resource-constrained environments, optimizing for low latency isn't just nice-to-have—it's essential.
+But here's the catch: these models are computationally hungry. In real-time applications, where response times need to be under 500ms to feel instantaneous, unoptimized LLMs often introduce delays that frustrate users and increase operational costs. From my experience leading deployments for e-commerce platforms, I've seen latency spikes turn a promising AI feature into a liability. With the rise of edge computing and the demand for AI in resource-constrained environments, optimizing for low latency isn't just nice-to-have, it's essential.
 
 This article draws from my production work, where I've optimized multimodal LLMs for customer support chatbots. We'll explore techniques like mixed-precision inference and model pruning, then guide you through deploying such a system with NVIDIA Triton. By the end, you'll have actionable insights to implement these in your own projects, backed by code and real-world lessons.
 
 ## Technical Deep Dive: Optimizing and Deploying Multimodal LLMs
 
-Let's get into the nitty-gritty. Optimizing latency in multimodal LLMs involves targeted architectural choices that balance speed and accuracy. I'll focus on two key techniques—mixed-precision inference and model pruning—before walking you through a deployment guide using NVIDIA Triton for a text+image LLM in customer support.
+Let's get into the nitty-gritty. Optimizing latency in multimodal LLMs involves targeted architectural choices that balance speed and accuracy. I'll focus on two key techniques, mixed-precision inference and model pruning, before walking you through a deployment guide using NVIDIA Triton for a text+image LLM in customer support.
 
 ### Understanding Multimodal LLM Challenges
 Multimodal LLMs like LLaVA combine a vision encoder (e.g., ViT for images) with a language model (e.g., Llama-based transformer). The vision encoder processes images into feature vectors, which are then concatenated with text embeddings and fed into the LLM for joint reasoning. This cross-modal integration is powerful but computationally expensive, often leading to high GPU memory usage and slow inference times.
@@ -41,7 +41,7 @@ import torch
 from torch.cuda.amp import autocast, GradScaler
 
 # Assume we have a multimodal model loaded, e.g., LLaVA model
-model = MultimodalLLM()  # Custom class wrapping vision and language components
+model = MultimodalLLM() # Custom class wrapping vision and language components
 model.to('cuda')
 model.eval()
 
@@ -60,7 +60,7 @@ def infer_with_mixed_precision(text_input, image_input):
 
 # Example usage
 text_query = "What's wrong with this product?"
-image_data = torch.rand(1, 3, 224, 224).to('cuda')  # Simulated image tensor
+image_data = torch.rand(1, 3, 224, 224).to('cuda') # Simulated image tensor
 response = infer_with_mixed_precision(text_query, image_data)
 print(response)
 ```
@@ -77,11 +77,11 @@ import torch
 import torch.nn.utils.prune as prune
 
 # Load a sample vision encoder, e.g., from ViT in LLaVA
-vision_encoder = VisionEncoder()  # Assume this is part of the multimodal model
+vision_encoder = VisionEncoder() # Assume this is part of the multimodal model
 vision_encoder.to('cuda')
 
 # Apply magnitude pruning to convolutional layers (for ViT, this could be attention layers)
-prune.l1_unstructured(vision_encoder.layer1, name='weight', amount=0.3)  # Prune 30% of weights
+prune.l1_unstructured(vision_encoder.layer1, name='weight', amount=0.3) # Prune 30% of weights
 prune.l1_unstructured(vision_encoder.layer2, name='weight', amount=0.3)
 
 # Make pruning permanent
@@ -93,7 +93,7 @@ torch.save(vision_encoder.state_dict(), 'pruned_vision_encoder.pth')
 
 # Inference with pruned model
 def infer_with_pruned_model(text_input, image_input):
-    pruned_vision_features = vision_encoder(image_input)  # Faster due to fewer weights
+    pruned_vision_features = vision_encoder(image_input) # Faster due to fewer weights
     # Proceed with text encoding and LLM as before
     return output
 
