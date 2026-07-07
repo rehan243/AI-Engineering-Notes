@@ -15,15 +15,15 @@ _By Rehan Malik | Senior AI/ML Engineer_
 ## TL;DR
 
 - **AutoGluon outperformed H2O AutoML on the Adult dataset with 87.2% accuracy vs. 85.4%.**
-- **AutoGluon’s median training time was 41% lower than H2O on datasets under 100K rows.**
-- **H2O AutoML’s stacked ensembles provided more robust performance (lower variance) across 5 real-world datasets.**
+- **AutoGluon's median training time was 41% lower than H2O on datasets under 100K rows.**
+- **H2O AutoML's stacked ensembles provided more robust performance (lower variance) across 5 real-world datasets.**
 - **Both frameworks reduce manual tuning by >80%, but require careful resource management for production scaling.**
 
 ---
 
 ## Prerequisites
 
-To reproduce the benchmarking study and follow along, you’ll need:
+To reproduce the benchmarking study and follow along, you'll need:
 
 - Python 3.8+ (tested with Python 3.10)
 - `h2o` >= 3.36.0.4
@@ -36,7 +36,7 @@ To reproduce the benchmarking study and follow along, you’ll need:
 
 ## Introduction: Why AutoML for Tabular Data Matters Now
 
-Despite the surge in deep learning for images and text, **tabular data remains the backbone of enterprise ML**. Gartner reports that **>65% of enterprise ML deployments in 2023 were on tabular data**—data from CRM, ERP, finance, patient records, and IoT sensors. Yet, practitioners spend up to **60% of project time** wrangling with feature engineering, model selection, and hyperparameter tuning. Enter AutoML: frameworks like H2O AutoML and AutoGluon automate those tasks, allowing teams to iterate faster, reduce human error, and focus on deployment.
+Despite the surge in deep learning for images and text, **tabular data remains the backbone of enterprise ML**. Gartner reports that **>65% of enterprise ML deployments in 2023 were on tabular data**, data from CRM, ERP, finance, patient records, and IoT sensors. Yet, practitioners spend up to **60% of project time** wrangling with feature engineering, model selection, and hyperparameter tuning. Enter AutoML: frameworks like H2O AutoML and AutoGluon automate those tasks, allowing teams to iterate faster, reduce human error, and focus on deployment.
 
 This article benchmarks H2O AutoML and AutoGluon on real datasets, shares production architectures, and distills lessons from deploying both at scale.
 
@@ -129,7 +129,7 @@ df = pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/adul
                         "hours_per_week","native_country","income"])
 
 # Preprocessing for AutoGluon
-df['income'] = df['income'].str.strip()  # Remove trailing period
+df['income'] = df['income'].str.strip() # Remove trailing period
 train_data = TabularDataset(df)
 label = 'income'
 
@@ -140,7 +140,7 @@ test_df = train_data.drop(train_df.index)
 # Run AutoGluon AutoML
 predictor = TabularPredictor(label=label, eval_metric='accuracy').fit(
     train_df, 
-    time_limit=1200,  # seconds
+    time_limit=1200, # seconds
     presets='best_quality'
 )
 
@@ -167,26 +167,26 @@ AutoML frameworks need architectural support for **repeatable experiments, resou
 
 ```
             +--------------------+
-            |  Data Ingestion    |
+            | Data Ingestion |
             +--------------------+
                       |
                       v
             +--------------------+
-            |   Feature Store    |
+            | Feature Store |
             +--------------------+
                       |
                       v
             +--------------------+
-            |   AutoML Pipeline  |
-            |   (H2O / AutoGluon)|
+            | AutoML Pipeline |
+            | (H2O / AutoGluon)|
             +--------------------+
-           /         |         \
-          v          v          v
-    Model Registry   |    Metrics Logging
+           / | \
+          v v v
+    Model Registry | Metrics Logging
                      |
                      v
             +--------------------+
-            |   Deployment API   |
+            | Deployment API |
             +--------------------+
 ```
 
@@ -203,8 +203,8 @@ AutoML frameworks need architectural support for **repeatable experiments, resou
 Here are real-world lessons from deploying H2O and AutoGluon in production (finance/retail datasets, 100K-10M rows):
 
 - **Resource Management:** H2O scales distributed, but requires JVM tuning (`max_mem_size`, cluster nodes); AutoGluon is Python-native, easier for Kubernetes scaling but memory spikes on large ensembles.
-- **Training Time:** AutoGluon’s async bagging is faster for datasets <500K rows (median 41% less time, see above), but H2O’s stacking can outperform for larger datasets (≥1M rows).
-- **Deployment:** H2O’s POJO export is invaluable for Java microservices; AutoGluon’s pickle export is standard for Python REST APIs.
+- **Training Time:** AutoGluon's async bagging is faster for datasets <500K rows (median 41% less time, see above), but H2O's stacking can outperform for larger datasets (≥1M rows).
+- **Deployment:** H2O's POJO export is invaluable for Java microservices; AutoGluon's pickle export is standard for Python REST APIs.
 - **Feature Engineering:** Both frameworks handle categorical encoding, missing values, and basic transformations, but domain-specific features (e.g., date parsing, custom aggregations) still require manual intervention.
 - **Interpretability:** H2O integrates with SHAP/LIME out of the box; AutoGluon offers native feature importance, but deeper interpretability needs external tools.
 
@@ -212,10 +212,10 @@ Here are real-world lessons from deploying H2O and AutoGluon in production (fina
 
 ## Key Takeaways
 
-1. **AutoGluon is faster and more accurate on small/medium tabular datasets (<100K rows), but H2O’s ensembles offer more robust predictions on large-scale data.**
+1. **AutoGluon is faster and more accurate on small/medium tabular datasets (<100K rows), but H2O's ensembles offer more robust predictions on large-scale data.**
 2. **Both frameworks eliminate up to 80% of manual pipeline tasks (model selection, tuning), but custom feature engineering remains crucial for domain accuracy.**
 3. **For production, integrate AutoML with feature stores and model registries for traceability and reproducibility.**
-4. **Carefully manage resources—JVM tuning for H2O, memory limits and concurrency for AutoGluon—especially on cloud platforms.**
+4. **Carefully manage resources, JVM tuning for H2O, memory limits and concurrency for AutoGluon, especially on cloud platforms.**
 5. **Interpretability is not fully automated: use SHAP/LIME for H2O; supplement AutoGluon with external packages as needed.**
 
 ---
