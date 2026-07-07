@@ -35,9 +35,9 @@ _By Rehan Malik | Senior AI/ML Engineer_
 
 ## Introduction
 
-The adoption of BERT and its variants in enterprise NLP has skyrocketed, but **production deployments often stall on cost, latency, and hardware constraints**. For instance, BERT-base (110M parameters, >400MB) can take **>500ms per query** on a single CPU core—far too slow for interactive applications like search, chatbots, or document classification.
+The adoption of BERT and its variants in enterprise NLP has skyrocketed, but **production deployments often stall on cost, latency, and hardware constraints**. For instance, BERT-base (110M parameters, >400MB) can take **>500ms per query** on a single CPU core, far too slow for interactive applications like search, chatbots, or document classification.
 
-With quantization and knowledge distillation, it’s possible to **cut inference times to <100ms/query** and reduce memory usage by over 70%, without sacrificing accuracy. This article details a proven, step-by-step workflow that I’ve used to roll out scalable, low-latency BERT APIs in production.
+With quantization and knowledge distillation, it's possible to **cut inference times to <100ms/query** and reduce memory usage by over 70%, without sacrificing accuracy. This article details a proven, step-by-step workflow that I've used to roll out scalable, low-latency BERT APIs in production.
 
 ---
 
@@ -87,14 +87,14 @@ outputs = session.run(None, {k: v for k, v in inputs.items()})
 print(outputs[0].argmax()) # Output: predicted class index
 ```
 
-**Results:**  
+**Results:** 
 On a 2021 Intel i7 CPU, DistilBERT INT8 inference clocked **~80ms/query** (vs. 200ms for FP32). Accuracy drop: <0.5% (SST-2).
 
 ---
 
-### Step 2: Knowledge Distillation — Training a Student Model
+### Step 2: Knowledge Distillation, Training a Student Model
 
-For custom tasks, you may wish to distill BERT into a lighter student. Here’s how, using Hugging Face's [Trainer](https://huggingface.co/docs/transformers/main_classes/trainer):
+For custom tasks, you may wish to distill BERT into a lighter student. Here's how, using Hugging Face's [Trainer](https://huggingface.co/docs/transformers/main_classes/trainer):
 
 ```python
 # python3 -m pip install torch transformers datasets
@@ -151,8 +151,8 @@ trainer = DistillationTrainer(
 trainer.train()
 ```
 
-**Results:**  
-Distilled model achieved **96.8% of BERT’s accuracy** on SST-2, but inference was **2.5x faster** and memory usage cut by **38%**.
+**Results:** 
+Distilled model achieved **96.8% of BERT's accuracy** on SST-2, but inference was **2.5x faster** and memory usage cut by **38%**.
 
 ---
 
@@ -162,26 +162,26 @@ Distilled model achieved **96.8% of BERT’s accuracy** on SST-2, but inference 
 
 ```
                 ┌───────────────────────────────────────┐
-                │             Client/API                │
+                │ Client/API │
                 └─────────────────────┬─────────────────┘
                                       │ REST/gRPC call
                     ┌─────────────────┴──────────────────┐
-                    │         Inference Server           │
-                    │    (FastAPI/Flask, Gunicorn)       │
+                    │ Inference Server │
+                    │ (FastAPI/Flask, Gunicorn) │
                     └────────────┬─────────────┬─────────┘
-                                 │             │
-           ┌─────────────────────┴─────┐  ┌────┴───────────────────┐
-           │   Quantized ONNX Model    │  │ Distilled Model (PyTorch) │
-           │   (INT8, ONNX Runtime)    │  │ (FP32, CPU/GPU)           │
-           └─────────────┬─────────────┘  └───────────┬──────────────┘
-                         │                             │
-       ┌─────────────────┴──────┐      ┌───────────────┴─────────────┐
-       │  Model Selection/Router│      │ Monitoring (Prometheus etc) │
-       └──────────────┬─────────┘      └───────────────┬─────────────┘
-                      │                              │
-               ┌──────┴──────┐                 ┌─────┴─────┐
-               │ CPU/GPU HW  │                 │ Logging    │
-               └─────────────┘                 └────────────┘
+                                 │ │
+           ┌─────────────────────┴─────┐ ┌────┴───────────────────┐
+           │ Quantized ONNX Model │ │ Distilled Model (PyTorch) │
+           │ (INT8, ONNX Runtime) │ │ (FP32, CPU/GPU) │
+           └─────────────┬─────────────┘ └───────────┬──────────────┘
+                         │ │
+       ┌─────────────────┴──────┐ ┌───────────────┴─────────────┐
+       │ Model Selection/Router│ │ Monitoring (Prometheus etc) │
+       └──────────────┬─────────┘ └───────────────┬─────────────┘
+                      │ │
+               ┌──────┴──────┐ ┌─────┴─────┐
+               │ CPU/GPU HW │ │ Logging │
+               └─────────────┘ └────────────┘
 ```
 
 - **Quantized ONNX models** for latency-critical endpoints (e.g., classification).
@@ -193,19 +193,19 @@ Distilled model achieved **96.8% of BERT’s accuracy** on SST-2, but inference 
 
 ## Production Lessons Learned
 
-**1. Quantization works, but edge cases matter:**  
-Aggressive INT8 quantization can yield <1% drop in accuracy on sentiment/classification, but for tasks like NER, accuracy loss can reach 2–3%. Always validate on your target data.
+**1. Quantization works, but edge cases matter:** 
+Aggressive INT8 quantization can yield <1% drop in accuracy on sentiment/classification, but for tasks like NER, accuracy loss can reach 2-3%. Always validate on your target data.
 
-**2. Actual speedup depends on hardware:**  
+**2. Actual speedup depends on hardware:** 
 On Intel CPUs (AVX512), INT8 ONNX Runtime gave **2.7x speedup**; on older ARM, improvement was only 1.5x. GPU quantization (TensorRT) gave up to **5x**. Tune for your infra.
 
-**3. Model export quirks:**  
+**3. Model export quirks:** 
 ONNX export sometimes fails for custom layers. Hugging Face Optimum fixed many bugs, but always **test exported model outputs** against original PyTorch outputs.
 
-**4. Memory savings are substantial:**  
+**4. Memory savings are substantial:** 
 Quantized DistilBERT went from **180MB (FP32) to 45MB (INT8)**. This enabled **4x more models per node** in our Kubernetes deployment.
 
-**5. Monitoring is essential:**  
+**5. Monitoring is essential:** 
 Serve models with **metrics (Prometheus, OpenTelemetry)**. We caught rare accuracy regressions after quantization only via real-time monitoring.
 
 ---
