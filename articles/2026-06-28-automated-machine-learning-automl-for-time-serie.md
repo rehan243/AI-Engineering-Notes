@@ -123,7 +123,7 @@ A typical production architecture for time series forecasting using AutoGluon in
 The architecture can be represented as follows:
 ```
 +---------------+
-|  Data Ingestion  |
+| Data Ingestion |
 +---------------+
         |
         |
@@ -135,14 +135,14 @@ The architecture can be represented as follows:
         |
         v
 +---------------+
-| AutoGluon Model  |
-|  Training         |
+| AutoGluon Model |
+| Training |
 +---------------+
         |
         |
         v
 +---------------+
-| Model Serving    |
+| Model Serving |
 +---------------+
 ```
 
