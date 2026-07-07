@@ -31,13 +31,13 @@ author: Rehan Malik
 
 ## Introduction
 
-The explosion of LLMs has democratized NLP, but real-time inference often hits the wall of cost and latency—especially at scale. **Sub-1B parameter models are the workhorses of edge and microservice tasks.** I’ve seen practical deployments where a quantized DistilBERT serves 1000+ requests/sec on modest CPUs, all while keeping response times <50ms. If your app needs fast, cheap, and domain-specialized language understanding or generation, fine-tuning and serving tiny LLMs is the recipe.
+The explosion of LLMs has democratized NLP, but real-time inference often hits the wall of cost and latency, especially at scale. **Sub-1B parameter models are the workhorses of edge and microservice tasks.** I've seen practical deployments where a quantized DistilBERT serves 1000+ requests/sec on modest CPUs, all while keeping response times <50ms. If your app needs fast, cheap, and domain-specialized language understanding or generation, fine-tuning and serving tiny LLMs is the recipe.
 
 ---
 
-## H2: Current State of the Art and Key Breakthroughs
+## Current State of the Art and Key Breakthroughs
 
-### H3: Models Under 1B Parameters
+### Models Under 1B Parameters
 
 I work with these models most often for real-time use:
 
@@ -47,23 +47,23 @@ I work with these models most often for real-time use:
 - **GPT-2 Small (124M):** Fast text generation.
 - **Phi-1.5 (1.3B):** Slightly above 1B, but relevant techniques apply.
 - **DistilGPT-2 (82M):** Smaller, distilled GPT-2.
-- **Gemma (2B):** For reference—practices scale down.
+- **Gemma (2B):** For reference, practices scale down.
 
-### H3: Key Breakthroughs
+### Key Breakthroughs
 
-- **Knowledge Distillation:** Train a “student” model to mimic a larger “teacher.” TinyBERT uses attention transfer and layer-wise distillation.
+- **Knowledge Distillation:** Train a "student" model to mimic a larger "teacher." TinyBERT uses attention transfer and layer-wise distillation.
 - **Pruning:** Remove redundant weights. *Movement Pruning* (see [Hugging Face](https://huggingface.co/docs/transformers/main/en/main_classes/pruning)) enables dynamic sparsification.
-- **Quantization:** Reduce precision (FP32 → INT8). *QAT* and *PTQ* are mature; try [Optimum](https://huggingface.co/docs/optimum/main/en/index).
+- **Quantization:** Reduce precision (FP32 -> INT8). *QAT* and *PTQ* are mature; try [Optimum](https://huggingface.co/docs/optimum/main/en/index).
 - **Efficient Architectures:** Depth-wise convolutions, parameter sharing (ALBERT), reduced hidden sizes.
 - **ONNX/TensorRT Serving:** Model conversion enables fast inference.
 
 ---
 
-## H2: Production Architecture Patterns
+## Production Architecture Patterns
 
 For real-time tasks (chatbots, microservices, edge AI), the target is **low-latency (<100ms), high-throughput**, and low memory usage.
 
-### H3: Typical Architecture (Described)
+### Typical Architecture (Described)
 
 ```
     [Client Request]
@@ -71,8 +71,8 @@ For real-time tasks (chatbots, microservices, edge AI), the target is **low-late
         [API Gateway]
           |
     +-------------------+
-    |   Inference Pod   |
-    |  (ONNX Runtime)   |
+    | Inference Pod |
+    | (ONNX Runtime) |
     +-------------------+
           |
     [Sub-1B LLM Model: Quantized, Pruned]
@@ -87,7 +87,7 @@ For real-time tasks (chatbots, microservices, edge AI), the target is **low-late
 - **Deployment:** Microservice (FastAPI, Flask, gRPC).
 - **Hardware:** CPU or edge GPU (Jetson, Coral).
 
-### H3: Model Conversion and Quantization Workflow
+### Model Conversion and Quantization Workflow
 
 1. **Fine-tune on domain data (PyTorch/TF).**
 2. **Prune (Movement Pruning).**
@@ -97,9 +97,9 @@ For real-time tasks (chatbots, microservices, edge AI), the target is **low-late
 
 ---
 
-## H2: Technical Deep Dive
+## Technical Deep Dive
 
-### H3: Example 1 — Fine-Tuning DistilBERT for Sentiment Classification
+### Example 1, Fine-Tuning DistilBERT for Sentiment Classification
 
 **I fine-tune DistilBERT on IMDB sentiment data. This is a typical low-budget, high-speed use case.**
 
@@ -142,7 +142,7 @@ tokenizer.save_pretrained("./distilbert-finetuned")
 
 ---
 
-### H3: Example 2 — Post-Training Quantization & ONNX Export
+### Example 2, Post-Training Quantization & ONNX Export
 
 **Quantizing the fine-tuned model and exporting to ONNX for CPU inference.**
 
@@ -174,7 +174,7 @@ export(model=quantized_model, tokenizer=tokenizer, output=onnx_path, opset=13)
 
 ---
 
-### H3: Example 3 — Real-Time Inference with ONNX Runtime
+### Example 3, Real-Time Inference with ONNX Runtime
 
 **Serving quantized DistilBERT using ONNX Runtime for blazing-fast inference.**
 
@@ -192,25 +192,25 @@ inputs = tokenizer(text, return_tensors="np", max_length=128, padding="max_lengt
 input_names = {name: inputs[name] for name in session.get_inputs()[0].name}
 
 outputs = session.run(None, input_names)
-print("Predicted sentiment logits:", outputs[0])   # Output: array([[...]])
+print("Predicted sentiment logits:", outputs[0]) # Output: array([[...]])
 ```
 
 **In practice, I achieve sub-50ms inference on a quad-core CPU for batches of 4-16 inputs.**
 
 ---
 
-## H2: Common Pitfalls and How to Avoid Them
+## Common Pitfalls and How to Avoid Them
 
-- **Pitfall:** Quantizing with PTQ on very small models can degrade accuracy if calibration data is too limited.  
+- **Pitfall:** Quantizing with PTQ on very small models can degrade accuracy if calibration data is too limited. 
   **Solution:** Always use representative calibration samples (at least 500-1000).
-- **Pitfall:** Exporting to ONNX with unsupported ops (e.g., custom activation layers).  
+- **Pitfall:** Exporting to ONNX with unsupported ops (e.g., custom activation layers). 
   **Solution:** Stick to vanilla transformer architectures or check ONNX operator support.
-- **Pitfall:** Real-time serving bottlenecked by Python API overhead.  
+- **Pitfall:** Real-time serving bottlenecked by Python API overhead. 
   **Solution:** Use async endpoints (FastAPI/gRPC), batch requests, and keep inference pods warm.
 
 ---
 
-## H2: Production Lessons Learned
+## Production Lessons Learned
 
 - **Quantized DistilBERT can serve 1000+ requests/sec on a standard 8-core CPU (Intel Xeon, 2020 gen) with <50ms latency per request.**
 - **INT8 quantization shrinks model size from ~300MB to <80MB, fitting edge hardware.**
@@ -220,19 +220,19 @@ print("Predicted sentiment logits:", outputs[0])   # Output: array([[...]])
 
 ---
 
-## H2: Key Takeaways
+## Key Takeaways
 
 1. **Use knowledge distillation and pruning to squeeze task accuracy from tiny LLMs.**
-2. **Always quantize (PTQ/QAT) for CPU/GPU inference—expect 2-3x throughput gains.**
+2. **Always quantize (PTQ/QAT) for CPU/GPU inference, expect 2-3x throughput gains.**
 3. **Export models to ONNX/TensorRT for optimal serving; avoid model zoo formats in production.**
 4. **Choose async API frameworks (FastAPI, gRPC) and batch requests for real-time scaling.**
-5. **Monitor model accuracy post-quantization/pruning—don’t trade off too much for speed.**
+5. **Monitor model accuracy post-quantization/pruning, don't trade off too much for speed.**
 
 ---
 
-## H2: Further Reading
+## Further Reading
 
-- [Hugging Face Transformers — Tiny Models](https://huggingface.co/models?sort=downloads&search=tiny)
+- [Hugging Face Transformers, Tiny Models](https://huggingface.co/models?sort=downloads&search=tiny)
 - [ONNX Runtime Docs](https://onnxruntime.ai/docs/)
 - [Optimum for Model Optimization](https://huggingface.co/docs/optimum/main/en/index)
 - [Movement Pruning Paper](https://arxiv.org/abs/2005.07683)
