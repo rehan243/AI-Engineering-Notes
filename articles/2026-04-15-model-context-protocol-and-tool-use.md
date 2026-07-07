@@ -56,33 +56,33 @@ In this example, we create an MCP client instance and register a tool with the M
 Our MCP-native AI application will follow a microservices architecture, with separate services for model inference, tool execution, and data processing. The architecture can be represented as follows:
 ```
           +---------------+
-          |  Model Service  |
+          | Model Service |
           +---------------+
                   |
-                  |  MCP Request
+                  | MCP Request
                   v
           +---------------+
-          |  MCP Proxy     |
-          |  (Tool Registry) |
+          | MCP Proxy |
+          | (Tool Registry) |
           +---------------+
                   |
-                  |  Tool Request
+                  | Tool Request
                   v
           +---------------+
-          |  Tool Service  |
-          |  (Weather API)  |
+          | Tool Service |
+          | (Weather API) |
           +---------------+
                   |
-                  |  Result
+                  | Result
                   v
           +---------------+
-          |  MCP Proxy     |
+          | MCP Proxy |
           +---------------+
                   |
-                  |  Response
+                  | Response
                   v
           +---------------+
-          |  Model Service  |
+          | Model Service |
           +---------------+
 ```
 The MCP proxy acts as an intermediary between the model service and the tool service, handling tool registration, authentication, and request routing.
