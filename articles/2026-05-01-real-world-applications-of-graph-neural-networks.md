@@ -52,7 +52,7 @@ for index, row in transactions_df.iterrows():
 # Convert the graph to a PyTorch Geometric graph
 import torch
 from torch_geometric.utils import from_networkx
-x = torch.randn(G.number_of_nodes(), 128)  # node features
+x = torch.randn(G.number_of_nodes(), 128) # node features
 edge_index = from_networkx(G).edge_index
 edge_attr = from_networkx(G).edge_attr
 ```
@@ -117,36 +117,36 @@ A typical production architecture for GNN-based fraud detection involves the fol
 The architecture can be represented as follows:
 ```
           +---------------+
-          |  Transaction  |
-          |  Data         |
+          | Transaction |
+          | Data |
           +---------------+
                   |
                   |
                   v
           +---------------+
-          |  Graph        |
-          |  Construction  |
+          | Graph |
+          | Construction |
           +---------------+
                   |
                   |
                   v
           +---------------+
-          |  Node and Edge  |
-          |  Representation  |
+          | Node and Edge |
+          | Representation |
           +---------------+
                   |
                   |
                   v
           +---------------+
-          |  GNN Model     |
-          |  (GCN/GAT/etc.) |
+          | GNN Model |
+          | (GCN/GAT/etc.) |
           +---------------+
                   |
                   |
                   v
           +---------------+
-          |  Fraud Detection|
-          |  (Classification) |
+          | Fraud Detection|
+          | (Classification) |
           +---------------+
 ```
 
