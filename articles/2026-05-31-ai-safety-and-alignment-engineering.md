@@ -23,11 +23,11 @@ author: Rehan Malik | Senior AI/ML Engineer
 
 ## Introduction
 
-AI systems are powering critical decisions across industries — from healthcare diagnostics to autonomous vehicles and financial fraud detection. However, as their influence grows, the stakes for ensuring their alignment and safety rise exponentially. A misaligned AI model can lead to catastrophic consequences, such as an autonomous vehicle misinterpreting road signs or a financial algorithm inadvertently amplifying systemic bias.
+AI systems are powering critical decisions across industries, from healthcare diagnostics to autonomous vehicles and financial fraud detection. However, as their influence grows, the stakes for ensuring their alignment and safety rise exponentially. A misaligned AI model can lead to catastrophic consequences, such as an autonomous vehicle misinterpreting road signs or a financial algorithm inadvertently amplifying systemic bias.
 
-Research suggests that **90% of AI failures in production environments** are due to misaligned objectives or unanticipated behaviors under edge cases. For example, OpenAI’s GPT-3 has exhibited cases of generating harmful or biased outputs, highlighting the importance of alignment engineering.
+Research suggests that **90% of AI failures in production environments** are due to misaligned objectives or unanticipated behaviors under edge cases. For example, OpenAI's GPT-3 has exhibited cases of generating harmful or biased outputs, highlighting the importance of alignment engineering.
 
-In this article, we’ll explore practical techniques for AI safety and alignment engineering, including **value alignment, robustness, and explainability**, with a focus on production-grade applications.
+In this article, we'll explore practical techniques for AI safety and alignment engineering, including **value alignment, robustness, and explainability**, with a focus on production-grade applications.
 
 ---
 
@@ -85,7 +85,7 @@ def learn_reward_function(demos):
     # Simplified reward function using inverse reinforcement learning
     reward_fn = {}
     for obs, action in demos:
-        reward_fn[tuple(obs.flatten())] = -np.linalg.norm(obs)  # Preference for balance
+        reward_fn[tuple(obs.flatten())] = -np.linalg.norm(obs) # Preference for balance
     return reward_fn
 
 reward_function = learn_reward_function(expert_demos)
@@ -96,7 +96,7 @@ print("Learned Reward Function:", list(reward_function.items())[:5])
 
 **Output:**
 ```
-Learned Reward Function: [(array([0.041, -0.015, 0.046, -0.031]), -0.048), ...]
+Learned Reward Function: [(array([0.041, -0.015, 0.046, -0.031]), -0.048)...]
 ```
 
 This example demonstrates how to derive a reward function from expert demonstrations, which can then be used to train a reinforcement learning model that aligns with human preferences.
@@ -107,7 +107,7 @@ This example demonstrates how to derive a reward function from expert demonstrat
 
 In production systems, models must handle uncertainty gracefully. Bayesian Neural Networks (BNNs) provide probabilistic outputs, which include confidence intervals to quantify uncertainty. This is especially useful in high-stakes applications like medical diagnoses or autonomous systems.
 
-Here’s a runnable example of implementing a BNN using PyTorch:
+Here's a runnable example of implementing a BNN using PyTorch:
 
 ```python
 # Install necessary packages
@@ -124,7 +124,7 @@ from pyro.distributions import Normal, Bernoulli
 class BayesianNN(nn.Module):
     def __init__(self):
         super().__init__()
-        self.fc = nn.Linear(1, 1)  # Simple single-layer network
+        self.fc = nn.Linear(1, 1) # Simple single-layer network
     
     def forward(self, x):
         return pyro.sample("output", Normal(self.fc(x), 0.1))
@@ -172,7 +172,7 @@ Trained Bias: 0.12
 
 Explainability is essential for building trust in AI systems. Libraries like **Captum** offer tools to understand model predictions via techniques like Integrated Gradients and saliency maps.
 
-Here’s how you can apply Integrated Gradients to explain predictions of a simple neural network:
+Here's how you can apply Integrated Gradients to explain predictions of a simple neural network:
 
 ```python
 # Install necessary packages
@@ -205,29 +205,29 @@ print("Attributions:", attr)
 **Output:**
 ```
 Attributions: tensor([[ 0.120, -0.075],
-                      [ 0.240,  0.192],
-                      [-0.431,  0.863]])
+                      [ 0.240, 0.192],
+                      [-0.431, 0.863]])
 ```
 
 ---
 
 ## Production Architecture
 
-One common architecture for an aligned AI system is **modular design**. Here’s an ASCII representation:
+One common architecture for an aligned AI system is **modular design**. Here's an ASCII representation:
 
 ```
 +---------------------+
-|   Input Interface   | <-- User Inputs
+| Input Interface | <-- User Inputs
 +---------------------+
          |
          v
 +---------------------+
-|  Preprocessing Layer| <-- Data cleaning, normalization, feature engineering
+| Preprocessing Layer| <-- Data cleaning, normalization, feature engineering
 +---------------------+
          |
          v
 +---------------------+
-|   Core AI Model     | <-- IRL, BNN, or other alignment techniques
+| Core AI Model | <-- IRL, BNN, or other alignment techniques
 +---------------------+
          |
          v
@@ -237,7 +237,7 @@ One common architecture for an aligned AI system is **modular design**. Here’s
          |
          v
 +---------------------+
-|     Output API      | <-- Human-readable results or actionable decisions
+| Output API | <-- Human-readable results or actionable decisions
 +---------------------+
 ```
 
