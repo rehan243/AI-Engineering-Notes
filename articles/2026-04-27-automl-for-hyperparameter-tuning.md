@@ -19,7 +19,7 @@ tags:
 
 ## TL;DR
 
-- **Optuna** outperforms **Hyperopt** in tuning speed and efficiency due to its advanced _Tree-structured Parzen Estimator (TPE)_ and built-in pruning features.  
+- **Optuna** outperforms **Hyperopt** in tuning speed and efficiency due to its advanced _Tree-structured Parzen Estimator (TPE)_ and built-in pruning features. 
 - On a benchmark task with a PyTorch model, Optuna achieved **7% higher accuracy** in **30% less time** compared to Hyperopt.
 - Hyperopt offers more customization but lacks the built-in integrations and pruning mechanisms of Optuna.
 - Both libraries work seamlessly with deep learning frameworks like TensorFlow and PyTorch, but **Optuna's native integration** simplifies the development process.
@@ -28,9 +28,9 @@ tags:
 
 ## Introduction: Why Hyperparameter Tuning Matters Right Now
 
-Hyperparameter tuning isn't just a "nice-to-have" anymore — it's essential for creating high-performance machine learning and deep learning models. According to a 2022 [report by McKinsey](https://www.mckinsey.com/business-functions/quantumblack/our-insights/automl), well-tuned models can improve business outcomes by up to **35% in predictive accuracy**, directly translating to better user experiences and higher revenues.
+Hyperparameter tuning isn't just a "nice-to-have" anymore, it's essential for creating high-performance machine learning and deep learning models. According to a 2022 [report by McKinsey](https://www.mckinsey.com/business-functions/quantumblack/our-insights/automl), well-tuned models can improve business outcomes by up to **35% in predictive accuracy**, directly translating to better user experiences and higher revenues.
 
-But finding the optimal hyperparameters is a non-trivial task due to the large search space and the time-consuming process of training deep learning models. Enter **AutoML frameworks** like **Optuna** and **Hyperopt**, which automate this process using Bayesian optimization-based techniques. However, not all AutoML tools are created equal — let's compare Optuna and Hyperopt to see which one delivers better results.
+But finding the optimal hyperparameters is a non-trivial task due to the large search space and the time-consuming process of training deep learning models. Enter **AutoML frameworks** like **Optuna** and **Hyperopt**, which automate this process using Bayesian optimization-based techniques. However, not all AutoML tools are created equal, let's compare Optuna and Hyperopt to see which one delivers better results.
 
 ---
 
@@ -48,7 +48,7 @@ Before you dive into this guide, make sure you have the following tools and libr
 
 ## Technical Deep Dive: Comparing Optuna and Hyperopt
 
-We'll benchmark both libraries using the same task: tuning the hyperparameters of a simple PyTorch model to classify the MNIST dataset. The hyperparameters we’ll optimize include:
+We'll benchmark both libraries using the same task: tuning the hyperparameters of a simple PyTorch model to classify the MNIST dataset. The hyperparameters we'll optimize include:
 
 - Number of layers (`n_layers`)
 - Number of units per layer (`n_units`)
@@ -103,7 +103,7 @@ def objective(trial):
     model = SimpleNN(n_layers=n_layers, n_units=n_units, lr=lr)
     trainer = pl.Trainer(
         max_epochs=10, 
-        limit_train_batches=0.2,  # Train on a fraction of data for faster tuning
+        limit_train_batches=0.2, # Train on a fraction of data for faster tuning
         callbacks=[optuna.integration.PyTorchLightningPruningCallback(trial, monitor="train_loss")],
         logger=False
     )
@@ -216,9 +216,9 @@ From real-world deployments:
 
 ## Key Takeaways
 
-1. **Use Optuna for faster tuning**—its pruning and native integrations save time without sacrificing accuracy.
+1. **Use Optuna for faster tuning**, its pruning and native integrations save time without sacrificing accuracy.
 2. **Leverage Hyperopt for custom optimization problems** where you require specialized search space definitions.
-3. **Experiment with your specific use case** before committing to a framework—performance can vary depending on the problem.
+3. **Experiment with your specific use case** before committing to a framework, performance can vary depending on the problem.
 
 ---
 
