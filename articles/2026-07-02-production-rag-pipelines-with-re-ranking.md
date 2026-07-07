@@ -70,32 +70,32 @@ for passage in re_ranked_passages:
 Our production RAG pipeline architecture can be described as follows:
 ```
                       +---------------+
-                      |  Query Input  |
+                      | Query Input |
                       +---------------+
                              |
                              v
                       +---------------+
-                      |  Retriever    |
-                      |  (Vector DB)  |
+                      | Retriever |
+                      | (Vector DB) |
                       +---------------+
                              |
                              v
                       +---------------+
-                      |  Re-ranker    |
-                      |  (Cross-encoder)|
+                      | Re-ranker |
+                      | (Cross-encoder)|
                       +---------------+
                              |
                              v
                       +---------------+
-                      |  Generator    |
-                      |  (LLM, e.g.,  |
-                      |   GPT or T5)   |
+                      | Generator |
+                      | (LLM, e.g., |
+                      | GPT or T5) |
                       +---------------+
                              |
                              v
                       +---------------+
-                      |  Response     |
-                      |  Generation   |
+                      | Response |
+                      | Generation |
                       +---------------+
 ```
 The retriever fetches relevant documents using a vector database. The re-ranker improves the quality of these documents, and the generator produces a final response.
