@@ -22,7 +22,7 @@ By Rehan Malik | Senior AI/ML Engineer
 
 ## TL;DR
 
-- **LLM latency can be reduced by up to 10x** using quantization, pruning, and serving optimizations — production inference improved from ~900ms to 60-90ms per request.
+- **LLM latency can be reduced by up to 10x** using quantization, pruning, and serving optimizations, production inference improved from ~900ms to 60-90ms per request.
 - **INT8 quantization** typically yields a 3-4x throughput boost with negligible loss (<1%) in accuracy on most NLP tasks.
 - **Batching and asynchronous inference** can cut tail latency by 60%, enabling real-time interaction at scale.
 - **Efficient model serving architectures** (e.g., TensorFlow Serving + Triton) are vital for horizontal scaling and low-latency SLAs.
@@ -81,8 +81,8 @@ print(f"Generated: {result}")
 # Generated: AI inference optimization is a process that allows models to
 ```
 
-**Production Result:**  
-- Throughput: ~4x improvement (FP32: 65 tokens/sec → INT8: 250 tokens/sec, A100 GPU)
+**Production Result:** 
+- Throughput: ~4x improvement (FP32: 65 tokens/sec -> INT8: 250 tokens/sec, A100 GPU)
 - Accuracy drop: <0.5% on downstream tasks
 
 ### Model Pruning: Remove Dead Weight
@@ -118,7 +118,7 @@ print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 # LLM pruning results in faster inference and reduced memory usage
 ```
 
-**Production Result:**  
+**Production Result:** 
 - Model size: 30% smaller
 - Latency: 1.3x faster
 - Accuracy: Loss typically <1% (validate before deployment)
@@ -146,7 +146,7 @@ LOCK = asyncio.Lock()
 
 async def batch_worker():
     while True:
-        await asyncio.sleep(0.01)  # Check every 10ms
+        await asyncio.sleep(0.01) # Check every 10ms
         async with LOCK:
             if len(BATCH) >= BATCH_SIZE:
                 prompts = [item['prompt'] for item in BATCH]
@@ -173,7 +173,7 @@ async def startup_event():
     asyncio.create_task(batch_worker())
 ```
 
-**Production Result:**  
+**Production Result:** 
 - Batch size 8: Up to 2x throughput increase, tail latency <90ms (vs. 180ms single request)
 - Compatible with GPU parallelism
 
@@ -188,20 +188,20 @@ async def startup_event():
 ```
 [Client] --> [API Gateway] --> [Async Batching Server]
                                |---> [Model Inference Engine]
-                               |         |
+                               | |
                           [Monitoring/Logging]
                                |
                          [Distributed Cache]
 ```
 
-**Description:**  
+**Description:** 
 - **API Gateway** (Kubernetes ingress / NGINX) routes requests.
 - **Async Batching Server** (FastAPI, gRPC, custom batching) groups requests for efficient GPU utilization.
 - **Model Inference Engine** (PyTorch/TensorFlow Serving, Nvidia Triton) executes quantized/pruned models.
 - **Monitoring/Logging** (Prometheus, Grafana, Opentelemetry) for real-time metrics.
 - **Distributed Cache** (Redis, Memcached) for caching frequent prompts.
 
-**Scaling:**  
+**Scaling:** 
 - Horizontal scaling via Kubernetes, auto-scaling pods based on queue depth.
 - GPU affinity and node selectors ensure optimal resource allocation.
 
@@ -215,13 +215,13 @@ async def startup_event():
 - **Batching is critical for tail latency**: When serving >500 req/sec, naive single-request serving resulted in tail latencies >200ms. Batching (size=16) cut tail latency to **<70ms**.
 - **Pruning needs careful validation**: Aggressive pruning (>40%) led to a **6% drop in accuracy** on some tasks. Conservative pruning (≤30%) worked best.
 - **Async serving avoids CPU bottlenecks**: Synchronous servers often bottlenecked on I/O. Simple asyncio-based batching provided up to **2x throughput** improvement.
-- **Monitoring matters**: Real-time dashboards (Prometheus/Grafana) revealed intermittent spikes — typically due to GPU contention or cache misses.
+- **Monitoring matters**: Real-time dashboards (Prometheus/Grafana) revealed intermittent spikes, typically due to GPU contention or cache misses.
 
 ---
 
 ## Key Takeaways
 
-1. **Quantize your LLMs**: Use INT8 dynamic quantization—expect 3-4x speedup, <1% accuracy loss.
+1. **Quantize your LLMs**: Use INT8 dynamic quantization, expect 3-4x speedup, <1% accuracy loss.
 2. **Batch requests and leverage async I/O**: Achieve up to 2x throughput and dramatically lower tail latency.
 3. **Prune judiciously**: Stay below 30% pruning and always validate on downstream tasks.
 4. **Use robust serving architectures**: Deploy using scalable frameworks (Triton, TensorFlow Serving, FastAPI), monitor with real-time tools.
