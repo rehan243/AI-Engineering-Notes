@@ -12,7 +12,7 @@ author: Rehan Malik
 ## TL;DR
 
 - **AutoML tools like Darts, Kats, and Pmdarima reduce forecasting development time by up to 70%.**
-- **Ensemble methods can improve forecast accuracy by 15–25% compared to single models.**
+- **Ensemble methods can improve forecast accuracy by 15-25% compared to single models.**
 - **Temporal Convolutional Networks (TCNs) outperform RNNs for long-horizon forecasting tasks (RMSE improvement of ~18%).**
 - **Production deployment requires careful feature engineering and robust validation; built-in frameworks may not suffice for data drift (>20% drop in accuracy without custom checks).**
 
@@ -34,7 +34,7 @@ Before diving in, make sure you have:
 
 Time series forecasting powers revenue predictions, supply chain planning, and anomaly detection across industries. With the exponential growth in sensor and transactional data, **automating forecasting pipelines is essential**: Gartner estimates that by 2025, over 80% of data science projects will use AutoML tools for time series tasks ([source](https://www.gartner.com/en/newsroom/press-releases/2020-01-21-gartner-identifies-top-10-trends-impacting-data-science-and-machine-learning)). In practice, this means less manual feature engineering, faster model selection, and improved reproducibility.
 
-However, the landscape is fragmented. Production-grade forecasting requires more than just "auto-fit": **deployment, model monitoring, and domain-specific feature engineering** remain challenging. Below, I’ll contrast leading AutoML tools, show practical code examples, and share hard-earned lessons from real deployments.
+However, the landscape is fragmented. Production-grade forecasting requires more than just "auto-fit": **deployment, model monitoring, and domain-specific feature engineering** remain challenging. Below, I'll contrast leading AutoML tools, show practical code examples, and share hard-earned lessons from real deployments.
 
 ---
 
@@ -62,8 +62,8 @@ print(model.summary())
 forecast = model.predict(n_periods=6)
 print('Next 6 months forecast:', forecast)
 ```
-**Output:**  
-ARIMA summary and forecast values.  
+**Output:** 
+ARIMA summary and forecast values. 
 This code auto-selects ARIMA(p,d,q)(P,D,Q)[12] hyperparameters, saving hours of manual grid search.
 
 ---
@@ -101,8 +101,8 @@ ens.fit(series)
 forecast = ens.predict(12)
 print(forecast.values())
 ```
-**Output:**  
-Ensemble forecast for 12 weeks.  
+**Output:** 
+Ensemble forecast for 12 weeks. 
 In production, ensemble forecasts improved MAE by 19% over Prophet or TCN alone.
 
 ---
@@ -131,7 +131,7 @@ model.fit()
 forecast = model.predict(steps=12)
 print("Next 12 hours forecast:\n", forecast)
 ```
-**Output:**  
+**Output:** 
 DataFrame of forecasts; useful for short-term traffic predictions.
 
 ---
@@ -166,10 +166,10 @@ A typical production-grade time series AutoML pipeline looks like this:
 
 From deploying AutoML forecasting pipelines for retail and energy clients:
 
-- **AutoML reduced initial model development from ~2 weeks to 2 days** (70% faster), but full production (feature engineering, deployment, monitoring) still took 4–6 weeks.
+- **AutoML reduced initial model development from ~2 weeks to 2 days** (70% faster), but full production (feature engineering, deployment, monitoring) still took 4-6 weeks.
 - **Ensemble models** (Prophet + TCN via Darts) improved forecast accuracy by 19% (MAE) and robustness to outliers.
 - **Model drift**: In one energy use case, not monitoring drift led to >20% accuracy drop in 3 months. Integrate drift checks and automated retraining triggers.
-- **Framework limitations**: Built-in feature engineering is generic. Custom calendar effects, domain events, and external regressors increased accuracy by 14–30%.
+- **Framework limitations**: Built-in feature engineering is generic. Custom calendar effects, domain events, and external regressors increased accuracy by 14-30%.
 - **Debugging**: AutoML-generated models can obscure failure modes. Always review logs and intermediate outputs.
 
 ---
@@ -180,7 +180,7 @@ From deploying AutoML forecasting pipelines for retail and energy clients:
 2. **Ensemble methods consistently outperform single models; deploy them for mission-critical forecasts.**
 3. **Backtesting and drift monitoring are non-negotiable for production reliability.**
 4. **Integrate AutoML frameworks (Darts, Kats, Pmdarima) with custom pipelines for maximum flexibility and accuracy.**
-5. **Run full walk-forward validation before deployment — random splits will mislead results.**
+5. **Run full walk-forward validation before deployment, random splits will mislead results.**
 
 ---
 
