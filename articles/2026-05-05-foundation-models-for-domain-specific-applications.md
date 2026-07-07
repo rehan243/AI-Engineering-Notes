@@ -51,9 +51,9 @@ from lora import LoraConfig, get_lora_model
 
 # Define LoRA configuration
 lora_config = LoraConfig(
-    r=16,  # LoRA rank
-    lora_alpha=32,  # LoRA scaling factor
-    target_modules=["q_proj", "v_proj"]  # Target modules for LoRA adaptation
+    r=16, # LoRA rank
+    lora_alpha=32, # LoRA scaling factor
+    target_modules=["q_proj", "v_proj"] # Target modules for LoRA adaptation
 )
 
 # Wrap the original model with LoRA
@@ -88,7 +88,7 @@ def train(model, device, dataset, optimizer, epochs):
 
 # Initialize the device, dataset, and optimizer
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-dataset = [...]  # Your domain-specific dataset
+dataset = [...] # Your domain-specific dataset
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
 
 # Train the model
@@ -99,28 +99,28 @@ train(model, device, dataset, optimizer, epochs=3)
 Our production architecture consists of the following components:
 ```
 +---------------+
-|  Client API  |
+| Client API |
 +---------------+
        |
        |
        v
 +---------------+
-|  Load Balancer  |
+| Load Balancer |
 +---------------+
        |
        |
        v
 +---------------+
-|  Model Serving  |
-|  (Hugging Face  |
-|   Transformers)  |
+| Model Serving |
+| (Hugging Face |
+| Transformers) |
 +---------------+
        |
        |
        v
 +---------------+
-|  Fine-Tuned    |
-|  GPT-Based Model|
+| Fine-Tuned |
+| GPT-Based Model|
 +---------------+
 ```
 The client API sends requests to the load balancer, which distributes the traffic across multiple model serving instances. Each instance uses Hugging Face Transformers to serve the fine-tuned GPT-based model.
