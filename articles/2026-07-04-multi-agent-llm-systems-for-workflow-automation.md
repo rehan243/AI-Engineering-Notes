@@ -97,37 +97,37 @@ print(result2)
 The architecture of a production-ready multi-agent LLM system can be described as follows:
 ```
 +---------------+
-|  User Request  |
+| User Request |
 +---------------+
         |
-        |  (API Gateway)
+        | (API Gateway)
         v
 +---------------+
-|  Workflow      |
-|  Orchestrator  |
+| Workflow |
+| Orchestrator |
 +---------------+
         |
-        |  (Task Queue)
+        | (Task Queue)
         v
 +---------------+
-|  Agent Manager  |
-|  (Agent Pool)    |
+| Agent Manager |
+| (Agent Pool) |
 +---------------+
         |
-        |  (Agent Selection)
+        | (Agent Selection)
         v
 +---------------+
-|  LLM Agent      |
-|  (with Tools     |
-|   and Memory)    |
+| LLM Agent |
+| (with Tools |
+| and Memory) |
 +---------------+
         |
-        |  (External APIs)
+        | (External APIs)
         v
 +---------------+
-|  External Tools  |
-|  (e.g., Database,|
-|   Web Search)    |
+| External Tools |
+| (e.g., Database,|
+| Web Search) |
 +---------------+
 ```
 This architecture emphasizes the importance of an orchestrator that manages workflows, an agent manager that oversees the pool of available agents, and the integration of external tools and APIs.
