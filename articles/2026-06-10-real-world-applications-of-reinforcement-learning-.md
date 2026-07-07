@@ -34,7 +34,7 @@ reward_model = AutoModelForSequenceClassification.from_pretrained(model_name)
 # Define a function to collect human feedback
 def collect_human_feedback(input_text, generated_text):
     # Simulate human feedback (in a real scenario, this would be collected from humans)
-    feedback = torch.randn(1)  # Replace with actual human feedback
+    feedback = torch.randn(1) # Replace with actual human feedback
     return feedback
 
 # Example usage
@@ -141,32 +141,32 @@ Our production architecture follows a Human-in-the-Loop (HITL) pattern, where hu
 
 ```
                       +---------------+
-                      |  Human Feedback  |
+                      | Human Feedback |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
-                      |  Reward Model    |
-                      |  (Trained on     |
-                      |   Human Feedback) |
+                      | Reward Model |
+                      | (Trained on |
+                      | Human Feedback) |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
-                      |  Language Model  |
-                      |  (Trained using   |
-                      |   Reinforcement  |
-                      |   Learning)      |
+                      | Language Model |
+                      | (Trained using |
+                      | Reinforcement |
+                      | Learning) |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
-                      |  Model Outputs   |
-                      |  (Used for       |
-                      |   Inference)     |
+                      | Model Outputs |
+                      | (Used for |
+                      | Inference) |
                       +---------------+
 ```
 
