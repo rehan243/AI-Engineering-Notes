@@ -12,8 +12,8 @@ author: Rehan Malik
 ## TL;DR
 
 - **MiniLM and DistilBERT** can be distilled, fine-tuned, and quantized to **run on a Raspberry Pi 4B** with <800MB RAM usage, yielding 95%+ accuracy of full-size models.
-- **LoRA/QLoRA** and ONNX quantization reduce fine-tuning and inference costs—**4-bit quantized models** are up to **5x smaller** and 3x faster than vanilla FP32 variants.
-- **Serving via FastAPI** enables local REST endpoints with sub-second latency (**350–600ms** per request on Pi).
+- **LoRA/QLoRA** and ONNX quantization reduce fine-tuning and inference costs, **4-bit quantized models** are up to **5x smaller** and 3x faster than vanilla FP32 variants.
+- **Serving via FastAPI** enables local REST endpoints with sub-second latency (**350-600ms** per request on Pi).
 - **Code examples included**: Fine-tuning, quantizing, and serving a MiniLM variant on ARM, with practical tips from production deployments.
 
 ---
@@ -33,11 +33,11 @@ To follow and reproduce all steps, ensure you have:
 
 ## Introduction
 
-Edge and on-device AI is advancing rapidly: **as of 2024, over 2 million Raspberry Pi devices are deployed powering language-driven IoT and automation**. However, running large language models (LLMs) on these devices was impractical—until recent breakthroughs in distillation, quantization, and efficient transfer learning.
+Edge and on-device AI is advancing rapidly: **as of 2024, over 2 million Raspberry Pi devices are deployed powering language-driven IoT and automation**. However, running large language models (LLMs) on these devices was impractical, until recent breakthroughs in distillation, quantization, and efficient transfer learning.
 
-Distilled, quantized LLMs can now **fit into 600–800MB RAM**, offer near state-of-the-art performance, and respond locally with sub-second latency. This enables privacy-preserving, ultra-low-latency NLP applications—such as voice assistants, smart sensors, and offline chatbots—on edge hardware.
+Distilled, quantized LLMs can now **fit into 600-800MB RAM**, offer near state-of-the-art performance, and respond locally with sub-second latency. This enables privacy-preserving, ultra-low-latency NLP applications, such as voice assistants, smart sensors, and offline chatbots, on edge hardware.
 
-In this guide, I’ll walk through:
+In this guide, I'll walk through:
 
 - Fine-tuning a distilled LLM using LoRA/QLoRA
 - Quantizing for 4-bit inference (ONNX/ggml)
@@ -49,7 +49,7 @@ In this guide, I’ll walk through:
 
 ## Fine-Tuning a Distilled LLM with LoRA on Raspberry Pi
 
-Let’s fine-tune [MiniLM](https://huggingface.co/microsoft/MiniLM-L12-H384-uncased) for custom intent classification using **PEFT + LoRA**. This approach only updates adapter weights, drastically cutting memory and compute.
+Let's fine-tune [MiniLM](https://huggingface.co/microsoft/MiniLM-L12-H384-uncased) for custom intent classification using **PEFT + LoRA**. This approach only updates adapter weights, drastically cutting memory and compute.
 
 ### Step 1: Install Requirements
 
@@ -60,7 +60,7 @@ pip3 install torch transformers peft optimum datasets onnxruntime fastapi uvicor
 
 ### Step 2: Prepare Dataset
 
-For demo, let’s use [HuggingFace's `emotion` dataset](https://huggingface.co/datasets/emotion):
+For demo, let's use [HuggingFace's `emotion` dataset](https://huggingface.co/datasets/emotion):
 
 ```python
 # emotion_dataset.py
@@ -73,7 +73,7 @@ print(dataset['train'][0])
 
 ### Step 3: Fine-Tune with LoRA
 
-We’ll use PEFT to fine-tune only a small number of LoRA-adapter parameters. This is RAM-efficient (<1GB during training):
+We'll use PEFT to fine-tune only a small number of LoRA-adapter parameters. This is RAM-efficient (<1GB during training):
 
 ```python
 # fine_tune_minilm.py
@@ -82,7 +82,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trai
 from peft import get_peft_model, LoraConfig, TaskType
 
 MODEL_ID = "microsoft/MiniLM-L12-H384-uncased"
-NUM_LABELS = 6  # emotion dataset
+NUM_LABELS = 6 # emotion dataset
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
 model = AutoModelForSequenceClassification.from_pretrained(MODEL_ID, num_labels=NUM_LABELS)
@@ -108,7 +108,7 @@ training_args = TrainingArguments(
     output_dir="./minilm-lora-emotion",
     per_device_train_batch_size=16,
     num_train_epochs=2,
-    fp16=False,  # Pi can't do fp16
+    fp16=False, # Pi can't do fp16
     save_strategy="epoch",
     logging_steps=50,
 )
@@ -124,8 +124,8 @@ trainer.train()
 model.save_pretrained("./minilm-lora-emotion")
 ```
 
-**Lessons learned:**  
-- Use small batch sizes (`16–32`) to avoid OOM
+**Lessons learned:** 
+- Use small batch sizes (`16-32`) to avoid OOM
 - LoRA cuts parameter updates by >90%, enabling feasible Pi training (or, train on x86 and move adapters)
 
 ---
@@ -156,7 +156,7 @@ export_model(
     task="sequence-classification",
 )
 
-# Quantize to int8 (4-bit quantization requires GGML or llama.cpp—see notes below)
+# Quantize to int8 (4-bit quantization requires GGML or llama.cpp, see notes below)
 quantizer = ORTQuantizer.from_pretrained(onnx_path)
 qconfig = QuantizationConfig(quantization_mode="dynamic")
 quantizer.quantize(save_dir="./minilm-lora-emotion-quantized.onnx", quantization_config=qconfig)
@@ -164,14 +164,14 @@ quantizer.quantize(save_dir="./minilm-lora-emotion-quantized.onnx", quantization
 print("Model quantized for edge inference.")
 ```
 
-**Note:**  
+**Note:** 
 - Use [llama.cpp](https://github.com/ggerganov/llama.cpp) or [ggml](https://github.com/ggerganov/ggml) for true 4-bit quantization of LLMs. For BERT-family models, ONNX dynamic quantization is sufficient.
 
 ---
 
 ## Serving the Quantized Model via FastAPI
 
-Let’s set up a **local REST API** so edge devices can query the LLM.
+Let's set up a **local REST API** so edge devices can query the LLM.
 
 ### Step 5: Inference Server (Python + FastAPI + ONNXRuntime)
 
@@ -205,8 +205,8 @@ def predict_emotion(req: TextRequest):
 # To run: uvicorn inference_api:app --host 0.0.0.0 --port 8000
 ```
 
-**Performance:**  
-- On Pi 4B, quantized ONNX inference yields `~400–650ms` latency/query
+**Performance:** 
+- On Pi 4B, quantized ONNX inference yields `~400-650ms` latency/query
 - RAM usage stays below 900MB
 
 ---
@@ -217,13 +217,13 @@ def predict_emotion(req: TextRequest):
 
 ```plaintext
 [Sensors/IoT]---|
-                |      [FastAPI REST Endpoint]
-                |        |
-                |      [ONNX Quantized MiniLM]
-                |        |
+                | [FastAPI REST Endpoint]
+                | |
+                | [ONNX Quantized MiniLM]
+                | |
 [Raspberry Pi]--|--[ONNX Runtime/llama.cpp]
-                |        |
-   [SSD/SD]     |   [RAM: <900MB]
+                | |
+   [SSD/SD] | [RAM: <900MB]
 ```
 
 - **Sensors/IoT**: Microphones, cameras, or local apps feed text to REST endpoint
@@ -249,7 +249,7 @@ From real deployments (8 Pi units in warehouse automation):
 
 ## Key Takeaways
 
-1. **Distilled, quantized LLMs—MiniLM, DistilBERT, TinyBERT—are now practical for ARM edge devices**: <900MB RAM, <1s latency.
+1. **Distilled, quantized LLMs, MiniLM, DistilBERT, TinyBERT, are now practical for ARM edge devices**: <900MB RAM, <1s latency.
 2. **PEFT/LoRA slashes training compute and memory**: Makes fine-tuning possible on modest hardware.
 3. **ONNX/ggml/llama.cpp enable quantized inference**: 4-bit models can fit in <400MB, with minimal accuracy loss.
 4. **Local REST APIs unlock privacy and low-latency NLP**: FastAPI + ONNXRuntime is robust for small LLMs.
