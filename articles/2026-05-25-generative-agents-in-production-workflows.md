@@ -24,14 +24,14 @@ image: ../images/generative-agents-in-production-workflow.jpg
 
 ## Introduction
 
-Generative agents are redefining how businesses scale real-time customer support. With **60% of customers preferring self-service options**, companies are deploying autonomous AI systems to handle multi-turn conversations, retrieve customer-specific information, and provide actionable solutions—all in milliseconds.
+Generative agents are redefining how businesses scale real-time customer support. With **60% of customers preferring self-service options**, companies are deploying autonomous AI systems to handle multi-turn conversations, retrieve customer-specific information, and provide actionable solutions, all in milliseconds.
 
 However, scaling these agents in production is far from trivial. Challenges include:
 - **Memory retrieval**: Efficiently storing and retrieving customer context across sessions.
 - **Token management**: Staying within token budgets while assembling a context-aware prompt.
 - **Inference latency**: Minimizing delay while using large language models (LLMs).
 
-In this article, we’ll explore resilient architectures, production-ready code, and lessons learned from deploying generative agents at scale.
+In this article, we'll explore resilient architectures, production-ready code, and lessons learned from deploying generative agents at scale.
 
 ---
 
@@ -51,7 +51,7 @@ To follow along, ensure your environment meets these requirements:
 
 Generative agents use memory to maintain context across sessions. A common solution involves **vector databases**, which store embeddings (numerical representations of text) and allow fast vector similarity search.
 
-Here’s an example of integrating **Pinecone** for memory management:
+Here's an example of integrating **Pinecone** for memory management:
 
 #### **Python Code: Memory Retrieval via Pinecone**
 ```python
@@ -62,7 +62,7 @@ from langchain.prompts import PromptTemplate
 
 # Initialize Pinecone
 PINECONE_API_KEY = "your-pinecone-api-key"
-PINECONE_ENV = "us-west1-gcp"  # Choose your region
+PINECONE_ENV = "us-west1-gcp" # Choose your region
 pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
 
 # Create or connect to a Pinecone index
@@ -93,7 +93,7 @@ print(context)
 #### **Key Insights**:
 - **Performance:** Pinecone handles vector queries with sub-10ms latency, supporting real-time applications.
 - **Scalability:** Use metadata fields (e.g., `session_id`) to scope searches for multi-customer environments.
-- **Embeddings:** OpenAI’s `text-embedding-ada-002` offers high-quality embeddings optimized for semantic similarity.
+- **Embeddings:** OpenAI's `text-embedding-ada-002` offers high-quality embeddings optimized for semantic similarity.
 
 ---
 
