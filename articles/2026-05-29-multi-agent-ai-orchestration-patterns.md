@@ -40,7 +40,7 @@ By Rehan Malik | Senior AI/ML Engineer
 
 ## Introduction
 
-**Why Now?** Multi-agent AI is not just an academic curiosity—it's powering real-world production systems that require parallel reasoning, negotiation, and rapid scaling. In 2024, over **52% of enterprise AI workloads** (source: McKinsey Digital AI Survey) are now orchestrating teams of agents, not just single models. This shift demands mature, scalable orchestration patterns—and exposes architectural tradeoffs that are rarely discussed outside high-throughput setups.
+**Why Now?** Multi-agent AI is not just an academic curiosity, it's powering real-world production systems that require parallel reasoning, negotiation, and rapid scaling. In 2024, over **52% of enterprise AI workloads** (source: McKinsey Digital AI Survey) are now orchestrating teams of agents, not just single models. This shift demands mature, scalable orchestration patterns, and exposes architectural tradeoffs that are rarely discussed outside high-throughput setups.
 
 ---
 
@@ -187,14 +187,14 @@ mediator.broadcast("Task assigned!")
 ### ASCII Architecture Diagram (Text Description)
 
 ```
-[ Client/API ]          
-      |                
-[ Agent Orchestrator ]  <-- Central Coordination Layer (Ray, FastAPI, Redis)
-      |                
+[ Client/API ] 
+      | 
+[ Agent Orchestrator ] <-- Central Coordination Layer (Ray, FastAPI, Redis)
+      | 
 ---------------------------
-|      |     |     |      |
-A1     A2    A3    ...   AN  <-- Agents (LLM or RL-based)
-|      |     |     |      |
+| | | | |
+A1 A2 A3 ... AN <-- Agents (LLM or RL-based)
+| | | | |
 [ Shared Data Store / Message Bus ]
       |
 [ External Systems (DB, APIs, etc.) ]
@@ -209,16 +209,16 @@ A1     A2    A3    ...   AN  <-- Agents (LLM or RL-based)
 
 ## Production Lessons Learned
 
-**1. Bottleneck Mitigation:**  
+**1. Bottleneck Mitigation:** 
 Ray's actor model scales horizontally, but central orchestrators (FastAPI, REST endpoints) often become CPU-bound at >500 agents. Offload coordination to distributed message buses (Redis, Kafka) to maintain <200ms latency.
 
-**2. LLM Cost Control:**  
-LLM-powered agents can spike API costs—batching and prompt optimization saves up to 35% in monthly OpenAI bills. In one deployment, switching from naive agent-to-agent LLM calls to summarized batch prompts reduced our GPT spend from $4,800 to $3,040/month.
+**2. LLM Cost Control:** 
+LLM-powered agents can spike API costs, batching and prompt optimization saves up to 35% in monthly OpenAI bills. In one deployment, switching from naive agent-to-agent LLM calls to summarized batch prompts reduced our GPT spend from $4,800 to $3,040/month.
 
-**3. Reliability:**  
+**3. Reliability:** 
 Agent "failure domains" are real. Set up circuit breakers and health checks. In large teams (>100 agents), random agent failures occurred every ~48 hours. Automated restart logic kept service uptime >99.7%.
 
-**4. Observability:**  
+**4. Observability:** 
 Use distributed tracing (Jaeger, OpenTelemetry) to visualize agent interactions and bottlenecks. Debugging inter-agent deadlocks saved days of manual troubleshooting.
 
 ---
@@ -229,7 +229,7 @@ Use distributed tracing (Jaeger, OpenTelemetry) to visualize agent interactions 
 2. **Monitor inter-agent latency:** Aim for <200ms; optimize message bus and network.
 3. **LLM orchestration is powerful but costly:** Batch prompts, optimize context size, audit API calls regularly.
 4. **Automate agent health checks and restarts:** Prevent cascading failures and maintain >99% uptime.
-5. **Instrument agent flows:** Use tracing for visibility—don't wait for production outages to add observability.
+5. **Instrument agent flows:** Use tracing for visibility, don't wait for production outages to add observability.
 
 ---
 
