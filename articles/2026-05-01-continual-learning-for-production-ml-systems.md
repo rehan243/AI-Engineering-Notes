@@ -53,7 +53,7 @@ Before diving into the code and concepts, ensure you have the following tools an
 ### 1. Replay-Based Methods
 Replay-based methods store a subset of past data in a memory buffer and interleave it with new data during training. This mitigates forgetting by reminding the model of older tasks or distributions.
 
-Here’s a runnable Python example implementing a simple **Experience Replay** mechanism using PyTorch and Avalanche:
+Here's a runnable Python example implementing a simple **Experience Replay** mechanism using PyTorch and Avalanche:
 
 ```python
 # Import required libraries
@@ -84,7 +84,7 @@ strategy = Replay(
     model=model,
     optimizer=optimizer,
     criterion=criterion,
-    mem_size=200,  # Memory buffer size
+    mem_size=200, # Memory buffer size
     train_epochs=1,
 )
 
@@ -117,7 +117,7 @@ This simple example demonstrates how replay-based methods strike a balance betwe
 ### 2. Regularization-Based Methods
 Regularization-based methods add a penalty to the loss function that discourages the model from altering weights crucial for previously learned tasks. One popular approach is **Elastic Weight Consolidation (EWC)**.
 
-Here’s how to implement EWC using PyTorch:
+Here's how to implement EWC using PyTorch:
 
 ```python
 # Define EWC loss calculation
@@ -142,7 +142,7 @@ for epoch in range(epochs):
 ```
 
 **Production Insight:**
-In one of our projects—a fraud detection system—combining replay (small buffer size of 10,000 samples) with EWC reduced accuracy degradation by **35% over a 6-month period** compared to retraining from scratch.
+In one of our projects, a fraud detection system, combining replay (small buffer size of 10,000 samples) with EWC reduced accuracy degradation by **35% over a 6-month period** compared to retraining from scratch.
 
 ---
 
@@ -158,21 +158,21 @@ While effective in avoiding forgetting, PNNs are resource-intensive and thus bet
 For real-world adoption, an architecture must consider scalability, latency, and resource constraints. Below is an ASCII representation of a typical architecture for a continual learning-enabled system:
 
 ```
-+-------------------------+          +-------------------+         +------------------+
-|       Data Stream       |   ---->  |  Data Processing  |  ---->  |    Data Store    |
-| (Kafka, Kinesis, etc.)  |          | (Featurization,   |         | (Replay Buffer)  |
-|                         |          |  Augmentation)    |         +------------------+
-+-------------------------+                  |
++-------------------------+ +-------------------+ +------------------+
+| Data Stream | ----> | Data Processing | ----> | Data Store |
+| (Kafka, Kinesis, etc.) | | (Featurization, | | (Replay Buffer) |
+| | | Augmentation) | +------------------+
++-------------------------+ |
                                              v
                                      +---------------+
-                                     |   Model API   |
-                                     | (Training +   |
-                                     | Inference)    |
+                                     | Model API |
+                                     | (Training + |
+                                     | Inference) |
                                      +---------------+
                                              |
                                              v
                                   +------------------+
-                                  |    Model Store   | <-- Model Versions
+                                  | Model Store | <-- Model Versions
                                   +------------------+
 ```
 
