@@ -24,7 +24,7 @@ date: 2023-10-10
 
 In 2023, over **80% of AI-driven chat systems** are powered by large language models (LLMs), yet issues like hallucinations, unsafe outputs, and misalignment with user intent persist. Reinforcement Learning from Human Feedback (RLHF) addresses these challenges by blending human-labeled data with reinforcement learning to align model outputs with human preferences.
 
-One pivotal example of RLHF’s success is **OpenAI’s InstructGPT**, where models trained with human feedback were rated **70% better on user satisfaction** for common tasks. In this article, we’ll explore how RLHF works, provide runnable code examples, and share insights from real-world deployments of RLHF-powered systems.
+One pivotal example of RLHF's success is **OpenAI's InstructGPT**, where models trained with human feedback were rated **70% better on user satisfaction** for common tasks. In this article, we'll explore how RLHF works, provide runnable code examples, and share insights from real-world deployments of RLHF-powered systems.
 
 ---
 
@@ -35,7 +35,7 @@ Before diving in, make sure you have the following tools and libraries installed
 - Python 3.8+
 - `transformers` (Hugging Face) >= 4.30.0
 - `torch` >= 2.0
-- `trl` (Hugging Face’s RL library)
+- `trl` (Hugging Face's RL library)
 
 Install the required libraries using:
 
@@ -53,11 +53,11 @@ Reinforcement Learning from Human Feedback involves three primary steps:
 2. **Reward Modeling**: A reward model is trained to predict human preferences based on labeled outputs.
 3. **Reinforcement Learning**: The model is optimized using reinforcement learning (commonly via Proximal Policy Optimization or PPO) guided by the reward model.
 
-Let’s break this down with hands-on code.
+Let's break this down with hands-on code.
 
 ### Step 1: Supervised Fine-Tuning
 
-First, we fine-tune a pretrained model using high-quality demonstration data. Here’s an example using Hugging Face’s `transformers` library:
+First, we fine-tune a pretrained model using high-quality demonstration data. Here's an example using Hugging Face's `transformers` library:
 
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingArguments
@@ -70,7 +70,7 @@ model = AutoModelForCausalLM.from_pretrained(model_name)
 # Load fine-tuning dataset
 from datasets import load_dataset
 
-dataset = load_dataset("my_custom_dialogue_dataset")  # Replace with your dataset
+dataset = load_dataset("my_custom_dialogue_dataset") # Replace with your dataset
 tokenized_dataset = dataset.map(lambda x: tokenizer(x["text"], truncation=True, padding="max_length", max_length=512), batched=True)
 
 # Define training arguments
@@ -107,7 +107,7 @@ Next, we train a reward model to evaluate outputs based on human preferences.
 1. Collect **human comparison data**. For example, given two responses from the fine-tuned model, labelers choose which response is better based on relevance, safety, or helpfulness.
 2. Train a reward model to predict preference scores.
 
-Here’s an example of training a simple reward model:
+Here's an example of training a simple reward model:
 
 ```python
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trainer, TrainingArguments
@@ -118,7 +118,7 @@ tokenizer = AutoTokenizer.from_pretrained(reward_model_name)
 reward_model = AutoModelForSequenceClassification.from_pretrained(reward_model_name, num_labels=1)
 
 # Tokenize preference dataset
-reward_dataset = load_dataset("my_reward_dataset")  # Contains pairs of prompts and human preference scores
+reward_dataset = load_dataset("my_reward_dataset") # Contains pairs of prompts and human preference scores
 tokenized_reward_dataset = reward_dataset.map(lambda x: tokenizer(x["input_text"], truncation=True, padding="max_length", max_length=512), batched=True)
 
 # Define training arguments
@@ -146,7 +146,7 @@ reward_model.save_pretrained("./reward_model")
 
 ### Step 3: Reinforcement Learning with PPO
 
-Finally, we use the reward model to guide the language model’s outputs using PPO. Hugging Face’s `trl` library makes this straightforward:
+Finally, we use the reward model to guide the language model's outputs using PPO. Hugging Face's `trl` library makes this straightforward:
 
 ```python
 from trl import PPOTrainer, PPOConfig, AutoModelForCausalLMWithValueHead
@@ -161,7 +161,7 @@ ppo_config = PPOConfig(batch_size=16, learning_rate=1.41e-5, log_with="wandb")
 # Initialize PPO trainer
 ppo_trainer = PPOTrainer(
     model=model,
-    ref_model=model,  # Reference model for KL-divergence penalty
+    ref_model=model, # Reference model for KL-divergence penalty
     tokenizer=tokenizer,
     dataset=tokenized_dataset["train"],
     reward_model=reward_model,
@@ -171,7 +171,7 @@ ppo_trainer = PPOTrainer(
 # Train with PPO
 for step in range(1000):
     batch = ppo_trainer.sample_batch()
-    rewards = compute_rewards(batch, reward_model)  # Define your reward function
+    rewards = compute_rewards(batch, reward_model) # Define your reward function
     ppo_trainer.step(batch, rewards)
 ```
 
@@ -179,17 +179,17 @@ for step in range(1000):
 
 ## RLHF Architecture
 
-Here’s an ASCII-based architecture diagram to explain the RLHF process:
+Here's an ASCII-based architecture diagram to explain the RLHF process:
 
 ```
-+------------------+          +-------------------+           +----------------+
-| Supervised Fine- |          | Reward Modeling  |           | Reinforcement  |
-| Tuning           |          |                 |           | Learning (PPO) |
-+------------------+          +-------------------+           +----------------+
-        |                          |                               |
-Pretrained Model    Human Preference Data          Fine-tuned Model
-        |                          |                               |
-   Fine-tuned Model          Reward Model                Aligned Model
++------------------+ +-------------------+ +----------------+
+| Supervised Fine- | | Reward Modeling | | Reinforcement |
+| Tuning | | | | Learning (PPO) |
++------------------+ +-------------------+ +----------------+
+        | | |
+Pretrained Model Human Preference Data Fine-tuned Model
+        | | |
+   Fine-tuned Model Reward Model Aligned Model
 ```
 
 1. **Supervised Fine-Tuning**: Helps the model grasp task-specific data and structure.
@@ -221,10 +221,10 @@ From deploying RLHF pipelines in production environments, here are some practica
 
 Here are some excellent resources to explore RLHF further:
 
-1. [OpenAI’s Blog on InstructGPT](https://openai.com/research/instruction-following/)
+1. [OpenAI's Blog on InstructGPT](https://openai.com/research/instruction-following/)
 2. [Hugging Face TRL Documentation](https://huggingface.co/transformers/)
-3. [Anthropic’s Constitutional AI](https://www.anthropic.com/index.html)
-4. [DeepMind’s Work on AI Alignment](https://www.deepmind.com/)
+3. [Anthropic's Constitutional AI](https://www.anthropic.com/index.html)
+4. [DeepMind's Work on AI Alignment](https://www.deepmind.com/)
 
 ---
 
