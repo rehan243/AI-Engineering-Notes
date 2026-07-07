@@ -111,36 +111,36 @@ This code demonstrates the complete RAG pipeline, from vector database retrieval
 Our optimized RAG architecture consists of the following components:
 ```
 +---------------+
-|  Query       |
+| Query |
 +---------------+
        |
        |
        v
 +---------------+
-|  Vector DB   |
-|  (HNSW Index)  |
+| Vector DB |
+| (HNSW Index) |
 +---------------+
        |
        |
        v
 +---------------+
-|  Nearest     |
-|  Neighbors   |
+| Nearest |
+| Neighbors |
 +---------------+
        |
        |
        v
 +---------------+
-|  Language    |
-|  Model (Pruned|
-|  and Quantized)|
+| Language |
+| Model (Pruned|
+| and Quantized)|
 +---------------+
        |
        |
        v
 +---------------+
-|  Generated   |
-|  Text        |
+| Generated |
+| Text |
 +---------------+
 ```
 This architecture enables fast retrieval and generation by leveraging efficient indexing algorithms and optimized model serving.
