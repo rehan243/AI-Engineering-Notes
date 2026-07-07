@@ -39,10 +39,10 @@ author: Rehan Malik
 
 ## Introduction
 
-**Why now?**  
+**Why now?** 
 As data volumes and velocity accelerate, ML pipelines are increasingly vulnerable to corrupted, anomalous, or missing data. According to a 2023 survey by DataOps.live, **62%** of ML teams reported that undetected data quality issues led to model failures or degraded accuracy in production[^1]. Traditional batch validation is too slow; real-time streaming checks are essential for robust ML systems.
 
-This article shows how to implement **real-time data quality monitoring** in a streaming ML pipeline using **Kafka** and **Great Expectations** — with proven, production-grade code and architecture.
+This article shows how to implement **real-time data quality monitoring** in a streaming ML pipeline using **Kafka** and **Great Expectations**, with proven, production-grade code and architecture.
 
 ---
 
@@ -111,10 +111,10 @@ for i in range(100):
     }
     producer.send('user_interactions', event)
     print(f"Sent: {event}")
-    time.sleep(0.05)  # Simulate stream
+    time.sleep(0.05) # Simulate stream
 
 producer.flush()
-# Output: Sent: {'user_id': 0, 'item_id': 0,...}
+# Output: Sent: {'user_id': 0, 'item_id': 0...}
 ```
 
 ### Step 3: Real-Time Data Quality Validation with Great Expectations
@@ -180,7 +180,7 @@ for msg in consumer:
 
 ### Kafka-Based Streaming Data Quality Monitoring
 
-Here’s how a production setup looks:
+Here's how a production setup looks:
 
 ```
 [Data Sources] ---> [Kafka Producer]
@@ -190,13 +190,13 @@ Here’s how a production setup looks:
                         |
                         V
       +-----------------------------------------+
-      | [Kafka Consumer]                        |
-      |     |                                   |
-      |     V                                   |
-      | [Great Expectations Validation Engine]  |
-      |     |                                   |
-      |     V                                   |
-      | [Data Quality Log/Alerting Service]     |
+      | [Kafka Consumer] |
+      | | |
+      | V |
+      | [Great Expectations Validation Engine] |
+      | | |
+      | V |
+      | [Data Quality Log/Alerting Service] |
       +-----------------------------------------+
                         |
                         V
@@ -209,7 +209,7 @@ Here’s how a production setup looks:
 - **Alerting/Logging**: Failures trigger Slack/email alerts or block downstream ML updates.
 - **ML Pipeline**: Only validated data is used for model training/inference.
 
-**Scaling**:  
+**Scaling**: 
 - Use multiple Kafka partitions for parallelism.
 - Deploy consumer-validation services as microservices, each with their own expectations suite.
 
@@ -217,11 +217,11 @@ Here’s how a production setup looks:
 
 ## Production Lessons Learned
 
-Here’s what I’ve seen in real deployments (e-commerce, fintech):
+Here's what I've seen in real deployments (e-commerce, fintech):
 
 - **Throughput**: A single Python consumer with Great Expectations can handle up to **20,000 records/sec** with 5 expectations (on a 4-core VM). For higher throughput, batch size and parallelism matter.
 - **False Positives**: Strict expectations (e.g., column type) can flag legitimate changes (e.g., new action types). Solution: implement soft alerts and periodic schema review.
-- **Latency**: Validation adds **~20-50ms** per batch. For real-time scoring, keep batch sizes small (5–20 records).
+- **Latency**: Validation adds **~20-50ms** per batch. For real-time scoring, keep batch sizes small (5-20 records).
 - **Alert Fatigue**: If all failures trigger blocking, engineers are overwhelmed. Use tiered alerting: critical failures block, warn-level send Slack/email.
 - **Data Drift Detection**: Integrate expectations for range/distribution (e.g., action frequency), not just schema. This detects subtle drift before models degrade.
 
@@ -229,10 +229,10 @@ Here’s what I’ve seen in real deployments (e-commerce, fintech):
 
 ## Key Takeaways
 
-1. **Real-time data quality monitoring is essential** — catching errors before they hit your ML models reduces production bugs by up to **30%**.
+1. **Real-time data quality monitoring is essential**, catching errors before they hit your ML models reduces production bugs by up to **30%**.
 2. **Kafka + Great Expectations is a proven combo** for scalable, flexible streaming validation; easily extensible to handle millions of records/day.
-3. **Tune batch sizes and parallelism** for your throughput + latency needs. For most systems, start with **10–100 records/batch** and scale out consumers.
-4. **Design for alerting and action** — not all validation failures are equal; tier alerts and automate schema evolution review.
+3. **Tune batch sizes and parallelism** for your throughput + latency needs. For most systems, start with **10-100 records/batch** and scale out consumers.
+4. **Design for alerting and action**, not all validation failures are equal; tier alerts and automate schema evolution review.
 5. **Integrate distributional checks** (not just schema) to catch drift before it impacts ML accuracy.
 
 ---
