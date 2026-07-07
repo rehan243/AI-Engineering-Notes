@@ -30,14 +30,14 @@ To follow along with the code examples and concepts in this article, ensure you 
 - **Hardware**: Access to a GPU (e.g., NVIDIA CUDA-enabled) is recommended for optimal performance, but CPU-based inference will work for testing.
 - **Knowledge base**: Familiarity with Python, basic streaming data concepts (e.g., Kafka topics), and machine learning inference pipelines. You'll need a sample ONNX model file (e.g., a quantized ResNet-50 model) for running the code examples.
 
-Install the libraries using pip:  
+Install the libraries using pip: 
 ```bash
 pip install kafka-python onnxruntime fastapi uvicorn
 ```
 
 ## Introduction
 
-In today's fast-paced digital landscape, real-time AI applications are no longer a luxury—they're a necessity. Whether it's detecting fraudulent transactions in milliseconds, providing live recommendations on e-commerce sites, or enabling autonomous vehicles to make split-second decisions, streaming model inference is the backbone of these systems. According to Gartner, by 2025, 75% of enterprise data will be created and processed in real-time, up from less than 25% in 2020. This shift demands ultra-low-latency inference, often under 100ms per prediction, to deliver seamless user experiences.
+In today's fast-paced digital landscape, real-time AI applications are no longer a luxury, they're a necessity. Whether it's detecting fraudulent transactions in milliseconds, providing live recommendations on e-commerce sites, or enabling autonomous vehicles to make split-second decisions, streaming model inference is the backbone of these systems. According to Gartner, by 2025, 75% of enterprise data will be created and processed in real-time, up from less than 25% in 2020. This shift demands ultra-low-latency inference, often under 100ms per prediction, to deliver seamless user experiences.
 
 Drawing from my experience as a Senior AI/ML Engineer, I've built and deployed streaming inference systems for high-stakes applications like real-time fraud detection at a major bank. In one case, we handled peak loads of 15,000 TPS with 99.9% availability by optimizing inference pipelines. This article dives deep into practical patterns, code implementations, and performance tricks to help you build robust, scalable real-time AI products. We'll cover the current state of the art, architectural designs, and hard-won lessons from production environments, ensuring you can apply these insights directly to your projects.
 
