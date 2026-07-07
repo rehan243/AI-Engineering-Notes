@@ -60,10 +60,10 @@ model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float
 
 # 2. LoRA configuration: inject adapters into attention layers
 lora_config = LoraConfig(
-    r=8,                # rank dimension
-    lora_alpha=16,      # scaling
-    target_modules=["q_proj", "v_proj"],  # attention layers
-    lora_dropout=0.05,  
+    r=8, # rank dimension
+    lora_alpha=16, # scaling
+    target_modules=["q_proj", "v_proj"], # attention layers
+    lora_dropout=0.05, 
     bias="none",
     task_type=TaskType.CAUSAL_LM
 )
@@ -119,7 +119,7 @@ from transformers import BitsAndBytesConfig
 
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True,
-    bnb_4bit_quant_type="nf4",   # NormalFloat4
+    bnb_4bit_quant_type="nf4", # NormalFloat4
     bnb_4bit_use_double_quant=True,
     bnb_4bit_compute_dtype=torch.float16,
 )
@@ -171,28 +171,28 @@ model.save_pretrained("./qlora-adapter")
 
 ```
 +---------------------+
-|  Customer Support   |
-|    Dataset (CSV)    |
+| Customer Support |
+| Dataset (CSV) |
 +----------+----------+
            |
            v
 +-------------------------------+
-| Pre-trained LLM (LLaMA-2-7B)  |
-|  (Frozen weights, quantized)  |
+| Pre-trained LLM (LLaMA-2-7B) |
+| (Frozen weights, quantized) |
 +-------------------------------+
            |
            v
 +-------------------------------+
-| LoRA/QLoRA Adapters           |
-|  (Fine-tuned for domain)      |
+| LoRA/QLoRA Adapters |
+| (Fine-tuned for domain) |
 +-------------------------------+
            |
            v
 +-------------------------------+
-| Inference Pipeline            |
-| - Adapter weights loaded      |
-| - Prompt engineering          |
-| - Response generation         |
+| Inference Pipeline |
+| - Adapter weights loaded |
+| - Prompt engineering |
+| - Response generation |
 +-------------------------------+
            |
            v
@@ -237,7 +237,7 @@ model.save_pretrained("./qlora-adapter")
 2. **Quantization + adapters = massive cost savings:** Deploy 7B-13B models on consumer GPUs reliably.
 3. **Adapter swapping enables rapid iteration:** Test new support flows or branding in hours, not weeks.
 4. **Training stability:** Use domain-appropriate regularization; LoRA is less prone to catastrophic forgetting.
-5. **Monitor eval metrics:** Always run human evaluation for "domain fit"—don't trust perplexity alone.
+5. **Monitor eval metrics:** Always run human evaluation for "domain fit", don't trust perplexity alone.
 
 ---
 
