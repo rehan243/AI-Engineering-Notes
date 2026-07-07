@@ -27,7 +27,7 @@ author: Rehan Malik | Senior AI/ML Engineer
 
 With the rise of domain-specific applications for LLMs, retrieval-augmented generation (RAG) has become a cornerstone of many production AI systems. RAG addresses one of the biggest weaknesses of LLMs: the "hallucination problem," where models confidently generate incorrect information. By grounding model outputs in retrieved, contextually relevant documents, RAG enhances precision and trustworthiness.
 
-However, implementing RAG pipelines for **confidential company data** introduces several unique challenges. These include handling sensitive information, adhering to compliance regulations, and enabling auditability — all while maintaining low latency and high scalability.
+However, implementing RAG pipelines for **confidential company data** introduces several unique challenges. These include handling sensitive information, adhering to compliance regulations, and enabling auditability, all while maintaining low latency and high scalability.
 
 Consider this: A 2023 Forrester report showed that **68% of enterprise data breaches stem from mishandled or poorly secured internal data**. When designing a RAG system that interacts with confidential information, missteps in data governance could result in catastrophic breaches or compliance violations. This article explores how to build a robust and scalable RAG pipeline specifically tailored for sensitive, domain-specific use cases.
 
@@ -39,7 +39,7 @@ Before diving into the implementation details, ensure you have access to the fol
 
 - **Python 3.8+** (for scripting and integrating components)
 - **Vector database**: Pinecone, Weaviate, or Zilliz (Milvus)
-- **Embedding models**: OpenAI’s `text-embedding-ada-002`, Hugging Face Sentence Transformers, or Cohere embeddings
+- **Embedding models**: OpenAI's `text-embedding-ada-002`, Hugging Face Sentence Transformers, or Cohere embeddings
 - A pre-trained **LLM API** like OpenAI's GPT-4 or an open-source model hosted locally
 - Libraries: `openai`, `pinecone-client`, `sentence-transformers`, `pandas`, `faiss`, and `langchain`
 
@@ -51,7 +51,7 @@ Before diving into the implementation details, ensure you have access to the fol
 
 When working with large, unstructured documents, chunking is essential to make content searchable. A common mistake is using arbitrarily large chunks, but this leads to poor retrieval precision and increased model token usage. Based on our production tests, the sweet spot for most embeddings lies between **200 and 400 tokens per chunk**.
 
-Here’s how to implement chunking:
+Here's how to implement chunking:
 
 ```python
 import re
@@ -125,7 +125,7 @@ print("Document chunks indexed successfully!")
 
 One of the challenges with confidential data is ensuring that updates (e.g., corrections or deletions) are propagated in near-real-time to your RAG pipeline. Consider using a **CRDT-based event sourcing pattern** for version control in your database and vector index.
 
-Here’s an example of how to handle real-time document updates:
+Here's an example of how to handle real-time document updates:
 
 ```python
 from datetime import datetime
@@ -158,20 +158,20 @@ update_document("doc-1", new_content)
 
 ## 2. **Architecture**
 
-Here’s a logical flow of a production-ready RAG pipeline for confidential data:
+Here's a logical flow of a production-ready RAG pipeline for confidential data:
 
 ```
-+--------------------+       +---------------------+        +------------------+
-| Confidential Data  |       |      Chunking       |        |  Vector Database |
-| Storage (S3, RDBMS)| ----> | (200-400 token size)| -----> |   (e.g., Pinecone|
-| - Encrypted        |       | + Metadata attached |        |  or FAISS)       |
-+--------------------+       +---------------------+        +------------------+
-          |                                                            |
-          v                                                            |
-+--------------------+                                    +------------v-----------+
-|      LLM API       |                                    |   Query Processing    |
-| e.g., GPT-4        | <--- Query & Context Retrieval --- | - Hybrid Retrieval    |
-+--------------------+                                    | - Dense + Sparse      |
++--------------------+ +---------------------+ +------------------+
+| Confidential Data | | Chunking | | Vector Database |
+| Storage (S3, RDBMS)| ----> | (200-400 token size)| -----> | (e.g., Pinecone|
+| - Encrypted | | + Metadata attached | | or FAISS) |
++--------------------+ +---------------------+ +------------------+
+          | |
+          v |
++--------------------+ +------------v-----------+
+| LLM API | | Query Processing |
+| e.g., GPT-4 | <--- Query & Context Retrieval --- | - Hybrid Retrieval |
++--------------------+ | - Dense + Sparse |
                                                          | - Ranking & Reranking |
                                                          +-----------------------+
 ```
@@ -193,7 +193,7 @@ Here’s a logical flow of a production-ready RAG pipeline for confidential data
 
 ## 4. **Key Takeaways**
 
-1. Chunk documents into **200–400 tokens** with overlapping for optimal retrieval performance.
+1. Chunk documents into **200-400 tokens** with overlapping for optimal retrieval performance.
 2. Use **state-of-the-art embeddings** (e.g., `text-embedding-ada-002`) and store them in **encrypted vector indexes**.
 3. Implement **real-time updates** with metadata for compliance and auditability.
 4. Leverage **hybrid retrieval methods** (dense + sparse) to improve precision in ambiguous queries.
