@@ -30,7 +30,7 @@ Our real-time ML pipeline will consist of the following components:
 
 The architecture can be represented as follows:
 ```plaintext
-User Actions → Kafka (user-events)
+User Actions -> Kafka (user-events)
                   ↘
                Kafka Connect (Validation)
                   ↘
