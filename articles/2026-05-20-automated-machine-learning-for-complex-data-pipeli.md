@@ -70,42 +70,42 @@ Our production AutoML pipeline follows a modular architecture, with separate com
 The architecture can be represented as follows:
 ```
                       +---------------+
-                      |  Data Sources  |
+                      | Data Sources |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
-                      | Data Ingestion  |
-                      |  (Multiple Sources) |
+                      | Data Ingestion |
+                      | (Multiple Sources) |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
                       | Data Preprocessing|
-                      |  (Cleaning, Imputation) |
+                      | (Cleaning, Imputation) |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
                       | Feature Engineering|
-                      |  (AutoML)         |
+                      | (AutoML) |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
-                      | Model Training    |
-                      |  (AutoML)         |
+                      | Model Training |
+                      | (AutoML) |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
-                      | Model Deployment  |
-                      |  (Production Ready) |
+                      | Model Deployment |
+                      | (Production Ready) |
                       +---------------+
 ```
 
