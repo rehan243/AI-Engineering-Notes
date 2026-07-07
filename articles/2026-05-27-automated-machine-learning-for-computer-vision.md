@@ -89,29 +89,29 @@ This code uses AutoKeras to build and train an image classifier on the MNIST dat
 Task-specific NAS tools like NAS-FPN and Auto-DeepLab have shown significant improvements in object detection and segmentation tasks. Here's a high-level overview of the NAS-FPN architecture:
 ```
 +---------------+
-|  Input Image  |
+| Input Image |
 +---------------+
        |
        |
        v
 +---------------+
-|  Feature Extractor  |
-|  (e.g. ResNet)     |
+| Feature Extractor |
+| (e.g. ResNet) |
 +---------------+
        |
        |
        v
 +---------------+
-|  NAS-FPN Module    |
-|  (Feature Pyramid  |
-|   Network)         |
+| NAS-FPN Module |
+| (Feature Pyramid |
+| Network) |
 +---------------+
        |
        |
        v
 +---------------+
-|  Object Detection  |
-|  (e.g. Faster R-CNN) |
+| Object Detection |
+| (e.g. Faster R-CNN) |
 +---------------+
 ```
 The NAS-FPN module is responsible for generating feature pyramids, which are then used for object detection.
