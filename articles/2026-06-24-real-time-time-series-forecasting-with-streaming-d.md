@@ -22,30 +22,30 @@ author: Rehan Malik
 
 Before you start, ensure you have:
 
-- Python 3.8+  
-- Apache Kafka (2.8+ recommended), running locally or via Docker  
-- TensorFlow 2.10+  
-- Kafka Python client (`confluent-kafka` or `kafka-python`)  
-- `matplotlib`, `numpy`, `pandas` for data manipulation  
-- Docker (optional, for quick Kafka setup)  
+- Python 3.8+ 
+- Apache Kafka (2.8+ recommended), running locally or via Docker 
+- TensorFlow 2.10+ 
+- Kafka Python client (`confluent-kafka` or `kafka-python`) 
+- `matplotlib`, `numpy`, `pandas` for data manipulation 
+- Docker (optional, for quick Kafka setup) 
 - Basic shell and Jupyter skills
 
 ---
 
 ## Introduction
 
-Streaming time series forecasting is now a critical capability in finance, IoT, and healthcare. In 2024, **over 65% of Fortune 500 companies** deploy real-time models for anomaly detection and predictive maintenance (Gartner, 2023). The shift from batch to streaming architectures (using Kafka and TensorFlow) is driven by the need for instant insights—whether predicting sensor failure in an oil rig or forecasting stock prices on the fly.
+Streaming time series forecasting is now a critical capability in finance, IoT, and healthcare. In 2024, **over 65% of Fortune 500 companies** deploy real-time models for anomaly detection and predictive maintenance (Gartner, 2023). The shift from batch to streaming architectures (using Kafka and TensorFlow) is driven by the need for instant insights, whether predicting sensor failure in an oil rig or forecasting stock prices on the fly.
 
-But real-world production demands more than cool models: it needs scalable ingestion, robust feature engineering, and online learning to handle shifting data. Below, I’ll show you how to build a hands-on pipeline, from Kafka ingestion to live TensorFlow predictions, using proven architecture and production-ready code.
+But real-world production demands more than cool models: it needs scalable ingestion, robust feature engineering, and online learning to handle shifting data. Below, I'll show you how to build a hands-on pipeline, from Kafka ingestion to live TensorFlow predictions, using proven architecture and production-ready code.
 
 ---
 
 ## Technical Deep Dive: Streaming Data to Real-Time Forecast
 
-Let’s walk through a complete setup:  
-- Simulate streaming time series data into Kafka  
-- Consume data, engineer features in Python  
-- Build and train a Temporal Convolutional Network (TCN)  
+Let's walk through a complete setup: 
+- Simulate streaming time series data into Kafka 
+- Consume data, engineer features in Python 
+- Build and train a Temporal Convolutional Network (TCN) 
 - Serve real-time predictions
 
 ### 1. Simulate Streaming Data to Kafka
@@ -67,7 +67,7 @@ producer = KafkaProducer(
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
-for i in range(60):  # Simulate 60 seconds of readings
+for i in range(60): # Simulate 60 seconds of readings
     reading = {
         'timestamp': int(time.time()),
         'temperature': round(20 + random.normalvariate(0, 1), 2)
@@ -118,7 +118,7 @@ for msg in consumer:
         # Output: Features: {'timestamp': ..., 'ma': 20.31, 'temperature': 20.46}
 ```
 
-*This snippet computes a rolling mean over the last 10 readings—essential for trend prediction.*
+*This snippet computes a rolling mean over the last 10 readings, essential for trend prediction.*
 
 ---
 
@@ -155,7 +155,7 @@ model.fit(X, y, epochs=5, batch_size=32)
 
 ### 4. Real-Time Inference: Predict from Stream
 
-Suppose you want real-time forecasts as new readings arrive (window of 10). Here’s a simple serving interface:
+Suppose you want real-time forecasts as new readings arrive (window of 10). Here's a simple serving interface:
 
 ```python
 def predict_temperature(window):
@@ -185,10 +185,10 @@ Here's how a typical pipeline looks (described):
       |
       v
 [Kafka Topic: Raw Timeseries Events] ---> [Kafka Streams: Data Cleaning + Feature Engineering]
-      |                                               |
-      v                                               v
+      | |
+      v v
 [TensorFlow Model Training/Serving] <--- [Feature Stream]
-      |           
+      | 
       v
 [Prediction Output Topic] ---> [Monitoring: Prometheus/Grafana]
 ```
@@ -205,9 +205,9 @@ Here's how a typical pipeline looks (described):
 
 **From deployments in industrial IoT (20M+ events/day) and financial tick prediction:**
 
-- **Latency bottlenecks:** Models deployed via TensorFlow Serving had ~40 ms inference on CPU; with GPU, dropped to ~5 ms, but Kafka deserialization added 15 ms—optimize serialization!
+- **Latency bottlenecks:** Models deployed via TensorFlow Serving had ~40 ms inference on CPU; with GPU, dropped to ~5 ms, but Kafka deserialization added 15 ms, optimize serialization!
 - **Drift mitigation:** Online learning (mini-batch retraining every 10,000 events) improved accuracy by 25% for non-stationary data. Static models degraded after 2-3 days.
-- **Scaling Kafka:** With 8 brokers and 100 partitions, able to handle up to 100,000 events/sec sustained—monitor partition skew carefully.
+- **Scaling Kafka:** With 8 brokers and 100 partitions, able to handle up to 100,000 events/sec sustained, monitor partition skew carefully.
 - **Monitoring essentials:** Prometheus metrics on message lag and model latency exposed early warning signs; automated rollback on >0.1 RMSE spikes.
 - **Feature engineering in stream:** Calculating features (rolling mean/std) in Kafka Streams reduced downstream model errors by 18% vs. post-processing.
 
@@ -215,7 +215,7 @@ Here's how a typical pipeline looks (described):
 
 ## Key Takeaways
 
-1. **Stream-first mindset:** Architect your pipeline to handle ingestion, processing, and prediction in real time—batch is obsolete for mission-critical forecasting.
+1. **Stream-first mindset:** Architect your pipeline to handle ingestion, processing, and prediction in real time, batch is obsolete for mission-critical forecasting.
 2. **Model choice matters:** TCNs and Transformers outperform RNNs for long-range time series, especially in streaming contexts.
 3. **Online learning is essential:** Retrain often; production accuracy degrades quickly with static models on dynamic data.
 4. **Robust monitoring saves downtime:** Build dashboards for lag, inference latency, and accuracy; automate alerting and rollback.
