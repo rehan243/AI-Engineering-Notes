@@ -18,7 +18,7 @@ tags:
 
 ## TL;DR
 
-- **AutoML frameworks** like AutoKeras and Google Cloud AutoML Vision provide competitive accuracy (~93–95%) on standard datasets like CIFAR-10 and Fashion-MNIST, rivaling manually tuned models.
+- **AutoML frameworks** like AutoKeras and Google Cloud AutoML Vision provide competitive accuracy (~93-95%) on standard datasets like CIFAR-10 and Fashion-MNIST, rivaling manually tuned models.
 - Comprehensive solutions include **Neural Architecture Search (NAS)** and **transfer learning**, reducing development timelines by **80%** but can be costly (e.g., up to $2/hour in cloud environments).
 - Challenges include **limited fine-grained control**, **overhead costs**, and the need for high-quality labeled datasets for optimal results.
 - A hybrid approach combining AutoML with manual fine-tuning often delivers the best performance in production.
@@ -70,7 +70,7 @@ from tensorflow.keras.datasets import cifar10
 x_train, x_test = x_train / 255.0, x_test / 255.0
 
 # Initialize ImageClassifier
-clf = ak.ImageClassifier(max_trials=10, overwrite=True)  # Run 10 trials for NAS
+clf = ak.ImageClassifier(max_trials=10, overwrite=True) # Run 10 trials for NAS
 
 # Train the model
 clf.fit(x_train, y_train, epochs=10)
@@ -122,14 +122,14 @@ response = client.create_model(
         "display_name": "image_classification_model",
         "dataset_id": dataset_id,
         "image_classification_model_metadata": {
-            "train_budget_milli_node_hours": 8000,  # ~8 hours
+            "train_budget_milli_node_hours": 8000, # ~8 hours
         },
     },
 )
 print("Training operation name: {}".format(response.operation.name))
 ```
 
-While powerful, AutoML Vision comes with **cloud infrastructure costs** (e.g., $1–$2 per training hour), making it less ideal for small-scale projects.
+While powerful, AutoML Vision comes with **cloud infrastructure costs** (e.g., $1-$2 per training hour), making it less ideal for small-scale projects.
 
 ---
 
@@ -137,7 +137,7 @@ While powerful, AutoML Vision comes with **cloud infrastructure costs** (e.g., $
 
 H2O Driverless AI supports image classification and leverages GPU acceleration for faster training. It is particularly suited for enterprise workloads.
 
-**Pros:** Speed and interpretability.  
+**Pros:** Speed and interpretability. 
 **Cons:** Limited flexibility for highly customized computer vision tasks.
 
 ---
