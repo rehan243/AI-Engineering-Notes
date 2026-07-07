@@ -115,35 +115,35 @@ Our production architecture consists of a Graph Database (Neo4j) and a Vector Se
 
 ```
 +---------------+
-|  User Query  |
+| User Query |
 +---------------+
        |
        |
        v
 +---------------+
-|  Vector Search  |
-|  (Query Embed)  |
+| Vector Search |
+| (Query Embed) |
 +---------------+
        |
        |
        v
 +---------------+
-|  Graph Database  |
-|  (Knowledge Graph) |
+| Graph Database |
+| (Knowledge Graph) |
 +---------------+
        |
        |
        v
 +---------------+
-|  GNN (Retrieve  |
-|  Relevant Info)  |
+| GNN (Retrieve |
+| Relevant Info) |
 +---------------+
        |
        |
        v
 +---------------+
-|  LLM (Generate  |
-|  Response)      |
+| LLM (Generate |
+| Response) |
 +---------------+
 ```
 
