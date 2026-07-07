@@ -126,35 +126,35 @@ print(response)
 Our production architecture will consist of the following components:
 ```
                       +---------------+
-                      |  Customer    |
-                      |  Inquiry     |
+                      | Customer |
+                      | Inquiry |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
-                      |  Message Queue  |
-                      |  (RabbitMQ)     |
+                      | Message Queue |
+                      | (RabbitMQ) |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
-                      |  LangChain    |
-                      |  Agent         |
+                      | LangChain |
+                      | Agent |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
-                      |  OpenAI API    |
-                      |  (LLM)         |
+                      | OpenAI API |
+                      | (LLM) |
                       +---------------+
                              |
                              |
                              v
                       +---------------+
-                      |  Knowledge Base|
+                      | Knowledge Base|
                       +---------------+
 ```
 The customer inquiry is sent to the message queue, which buffers the request. The LangChain agent consumes the message from the queue, processes the customer inquiry using the OpenAI API, and retrieves relevant information from the knowledge base. The response is then sent back to the customer.
