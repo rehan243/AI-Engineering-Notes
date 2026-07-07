@@ -17,7 +17,7 @@ date: 2023-10-15
 
 - **Quantization reduces memory usage by up to 4x** with negligible accuracy loss. Techniques like **LLM-INT8** enable production-scale deployment of massive models on commodity hardware.
 - **LoRA fine-tuning achieves comparable task performance** with up to **1000x fewer trainable parameters**, making custom LLM training feasible even for smaller teams.
-- **Serverless inference cuts hosting costs dramatically** by offloading computation to pay-per-use cloud services like AWS Lambda — running serverless inference for a 70B model can cost as little as $0.10 per 1,000 queries.
+- **Serverless inference cuts hosting costs dramatically** by offloading computation to pay-per-use cloud services like AWS Lambda, running serverless inference for a 70B model can cost as little as $0.10 per 1,000 queries.
 - **Combined architecture patterns** leveraging these methods can help deploy a 70B parameter LLM on a tight budget without sacrificing responsiveness or accuracy.
 
 ---
@@ -26,7 +26,7 @@ date: 2023-10-15
 
 Large Language Models (LLMs) like GPT-3, PaLM, and LLaMA-70B have unlocked groundbreaking applications in NLP, from conversational AI to code generation. However, deploying these massive models in production environments remains a daunting challenge due to their high computational costs, memory requirements, and fine-tuning complexity.
 
-To put this into perspective, the raw memory footprint of a 70B parameter model exceeds **280GB** in FP32 precision. Scaling this for production use — across multiple users with low latency — can cost **hundreds of dollars per hour**. This article explores how to overcome these challenges using **quantization**, **LoRA**, and **serverless inference**, enabling production-scale deployment for **pennies per query**.
+To put this into perspective, the raw memory footprint of a 70B parameter model exceeds **280GB** in FP32 precision. Scaling this for production use, across multiple users with low latency, can cost **hundreds of dollars per hour**. This article explores how to overcome these challenges using **quantization**, **LoRA**, and **serverless inference**, enabling production-scale deployment for **pennies per query**.
 
 ---
 
@@ -59,8 +59,8 @@ model_name = "meta/llama-70b-hf"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
-    device_map="auto",  # Automatically maps layers to available GPUs
-    torch_dtype=torch.float16  # Use FP16 precision initially
+    device_map="auto", # Automatically maps layers to available GPUs
+    torch_dtype=torch.float16 # Use FP16 precision initially
 )
 
 # Apply INT8 quantization with Hugging Face's LLM-INT8 integration
@@ -106,9 +106,9 @@ model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
 
 # Configure LoRA: Update only 0.1% of parameters
 lora_config = LoraConfig(
-    r=8,  # Rank (low-rank matrices size)
+    r=8, # Rank (low-rank matrices size)
     lora_alpha=32,
-    target_modules=["q_proj", "v_proj"],  # Target attention projections
+    target_modules=["q_proj", "v_proj"], # Target attention projections
     lora_dropout=0.1,
     bias="none"
 )
@@ -206,7 +206,7 @@ From deploying LLMs in production:
 
 1. **Quantization Trade-offs**: Quantization can introduce edge-case errors (e.g., rare token mispredictions). Always validate on your specific workload.
 2. **LoRA Scaling**: LoRA is ideal for small datasets, but for general-purpose fine-tuning (e.g., multi-task), hybrid approaches may be needed.
-3. **Serverless Latency**: Cold starts can add ~1-2 seconds to inference — mitigatable with provisioned concurrency.
+3. **Serverless Latency**: Cold starts can add ~1-2 seconds to inference, mitigatable with provisioned concurrency.
 
 ---
 
