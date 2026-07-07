@@ -25,9 +25,9 @@ Before diving in, ensure you have the following tools and versions installed to 
 - **Other dependencies**: `torch.quantization` is included in PyTorch, but for pruning, you'll need `torch-prune` (install via `pip install torch-prune`). All code is tested on a Linux environment with GPU support; CPU fallback is possible but slower.
 
 ## Introduction
-Edge AI for real-time inference is no longer a futuristic concept—it's a necessity. According to Gartner, by 2025, 75% of enterprise data will be created and processed outside traditional data centers, primarily at the edge. This shift is driven by applications like autonomous vehicles, wearable health monitors, and smart city infrastructure, where low latency, minimal power consumption, and limited bandwidth are non-negotiable. Transformer models, such as BERT and Vision Transformers, excel in tasks like NLP and image recognition but come with hefty resource demands. For example, a standard BERT-base model with 110 million parameters consumes around 440MB in FP32 precision, making it unsuitable for edge devices like a Raspberry Pi (with 2-8GB RAM) or mobile SoCs.
+Edge AI for real-time inference is no longer a futuristic concept, it's a necessity. According to Gartner, by 2025, 75% of enterprise data will be created and processed outside traditional data centers, primarily at the edge. This shift is driven by applications like autonomous vehicles, wearable health monitors, and smart city infrastructure, where low latency, minimal power consumption, and limited bandwidth are non-negotiable. Transformer models, such as BERT and Vision Transformers, excel in tasks like NLP and image recognition but come with hefty resource demands. For example, a standard BERT-base model with 110 million parameters consumes around 440MB in FP32 precision, making it unsuitable for edge devices like a Raspberry Pi (with 2-8GB RAM) or mobile SoCs.
 
-From my experience deploying AI models in production, optimizing transformers for the edge isn't just about squeezing performance—it's about balancing accuracy, speed, and efficiency. Quantization and pruning are two powerhouse techniques that have repeatedly delivered results in my projects. Quantization reduces numerical precision, while pruning eliminates redundant weights. Together, they can cut model size by up to 80% and inference time by 50-70%, enabling real-time performance on devices with tight constraints. In this guide, I'll walk you through these methods step by step, drawing from real-world deployments where I've seen quantization reduce power usage by 60% in battery-operated IoT devices and pruning enable models to run on hardware with just 1GB RAM.
+From my experience deploying AI models in production, optimizing transformers for the edge isn't just about squeezing performance, it's about balancing accuracy, speed, and efficiency. Quantization and pruning are two powerhouse techniques that have repeatedly delivered results in my projects. Quantization reduces numerical precision, while pruning eliminates redundant weights. Together, they can cut model size by up to 80% and inference time by 50-70%, enabling real-time performance on devices with tight constraints. In this guide, I'll walk you through these methods step by step, drawing from real-world deployments where I've seen quantization reduce power usage by 60% in battery-operated IoT devices and pruning enable models to run on hardware with just 1GB RAM.
 
 ## Technical Deep Dive
 
@@ -54,7 +54,7 @@ model = DistilBertModel.from_pretrained(model_name)
 # Move model to GPU if available for faster computation
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
-model.eval()  # Set to evaluation mode
+model.eval() # Set to evaluation mode
 
 # Step 2: Prepare calibration data (use a small dataset for quantization calibration)
 # For simplicity, we'll use a few sample inputs; in practice, use a representative dataset
@@ -64,12 +64,12 @@ calibration_inputs = [
     "Quantization helps in edge deployment."
 ]
 inputs = tokenizer(calibration_inputs, return_tensors="pt", padding=True, truncation=True)
-inputs = {k: v.to(device) for k, v in inputs.items()}  # Move inputs to the same device
+inputs = {k: v.to(device) for k, v in inputs.items()} # Move inputs to the same device
 
 # Step 3: Apply Post-Training Quantization (PTQ)
 # Fuse modules for better quantization (e.g., conv and bn layers, but for transformers, focus on linear layers)
-model.qconfig = quant.get_default_qconfig("fbgemm")  # Use FBGEMM backend for x86 CPUs; change for other hardware
-quant.prepare(model, inplace=True)  # Prepare the model for quantization
+model.qconfig = quant.get_default_qconfig("fbgemm") # Use FBGEMM backend for x86 CPUs; change for other hardware
+quant.prepare(model, inplace=True) # Prepare the model for quantization
 
 # Calibrate the model with sample data
 with torch.no_grad():
@@ -77,9 +77,9 @@ with torch.no_grad():
         input_ids = tokenizer(text, return_tensors="pt").input_ids.to(device)
         model(input_ids)
 
-quant.convert(model, inplace=True)  # Convert to quantized model
+quant.convert(model, inplace=True) # Convert to quantized model
 
 # Step 4: Save the quantized model and measure size reduction
-original_model_size = os.path.getsize("distilbert-base-uncased/pytorch_model.bin") / (1024 * 1024)  # Size in MB
+original_model_size = os.path.getsize("distilbert-base-uncased/pytorch_model.bin") / (1024 * 1024) # Size in MB
 quantized_model_path = "distilbert_quantized.pt"
 torch.save(model.state_dict(), quantized_model
