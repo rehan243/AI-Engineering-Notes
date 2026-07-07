@@ -26,7 +26,7 @@ To follow along with the code examples and concepts, ensure you have:
 - Familiarity with Jupyter notebooks or a Python IDE for running code; all examples are tested on Google Colab with GPU acceleration for faster SHAP computations.
 
 ## Introduction
-Explainable AI (XAI) isn't just a buzzword—it's a necessity in today's regulatory landscape. With increasing scrutiny from bodies like the EU's GDPR and the rise of AI ethics guidelines, organizations are prioritizing models that can justify their decisions. A 2022 Gartner report highlights that 75% of enterprises will mandate XAI by 2024 to mitigate risks and build trust. From my experience deploying ensemble models in production, black box systems like Random Forests or Gradient Boosting Machines often excel in accuracy but fail in transparency, leading to stakeholder skepticism.
+Explainable AI (XAI) isn't just a buzzword, it's a necessity in today's regulatory landscape. With increasing scrutiny from bodies like the EU's GDPR and the rise of AI ethics guidelines, organizations are prioritizing models that can justify their decisions. A 2022 Gartner report highlights that 75% of enterprises will mandate XAI by 2024 to mitigate risks and build trust. From my experience deploying ensemble models in production, black box systems like Random Forests or Gradient Boosting Machines often excel in accuracy but fail in transparency, leading to stakeholder skepticism.
 
 This article focuses on SHAP (SHapley Additive exPlanations), a powerful technique grounded in cooperative game theory. SHAP values assign contributions to each feature for a prediction, making it ideal for demystifying complex ensemble models. I'll draw from real production scenarios, such as explaining credit risk models in banking, where SHAP helped reduce false positives by 15% by highlighting misleading features. By the end, you'll have actionable strategies to integrate SHAP into your workflows, complete with runnable code and architectural insights.
 
@@ -38,7 +38,7 @@ As of 2023, SHAP is deeply embedded in tools like scikit-learn and MLflow. For i
 The state of the art emphasizes scalability: SHAP's KernelExplainer works for any model, but for ensembles, the TreeExplainer is optimized for speed, handling millions of rows in minutes on GPU-accelerated clouds like AWS SageMaker.
 
 ## Technical Deep Dive
-Let's get hands-on. I'll walk through SHAP's application to an XGBoost ensemble model using a real-world dataset. We'll use the UCI Adult Income dataset to predict whether an individual earns over $50K, a common benchmark for interpretable ML. This section includes complete, runnable Python code—copy and paste it into your environment to see results.
+Let's get hands-on. I'll walk through SHAP's application to an XGBoost ensemble model using a real-world dataset. We'll use the UCI Adult Income dataset to predict whether an individual earns over $50K, a common benchmark for interpretable ML. This section includes complete, runnable Python code, copy and paste it into your environment to see results.
 
 First, we'll train a simple XGBoost model and compute SHAP values. SHAP provides both global and local explanations, which are crucial for understanding overall feature importance and individual predictions.
 
@@ -87,7 +87,7 @@ shap_values = explainer.shap_values(X_test)
 # Output: Print SHAP values for the first prediction
 # shap_values[0] contains SHAP values for the first instance; positive values increase prediction, negative decrease
 print("SHAP values for the first prediction:")
-print(shap_values[0][:5])  # Show first 5 features for brevity; interpret as feature contributions to the log-odds
+print(shap_values[0][:5]) # Show first 5 features for brevity; interpret as feature contributions to the log-odds
 
 # Visualize summary plot (requires matplotlib; run in an environment with plotting support)
 shap.summary_plot(shap_values, X_test, plot_type="bar")
