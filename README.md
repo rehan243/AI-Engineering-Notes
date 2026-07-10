@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- [Multi-Agent LLM Financial Trading Framework.](articles/2026-07-10-multi-agent-llm-financial-trading-framework.md) — *2026-07-10*
 - [<clear topic name>](articles/2026-07-09-clear-topic-name.md) — *2026-07-09*
 - [clear topic name](articles/2026-07-08-clear-topic-name.md) — *2026-07-08*
 - [Fine Tuning And Serving Tiny Llms 1B Parameters](articles/2026-07-07-fine-tuning-and-serving-tiny-llms-1b-parameters.md) - *2026-07-07*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Ai Safety And Alignment Engineering](articles/2026-05-31-ai-safety-and-alignment-engineering.md) - *2026-05-31*
 - [Real Time Model Serving With Gpus](articles/2026-05-30-real-time-model-serving-with-gpus.md) - *2026-05-30*
 - [Multi Agent Ai Orchestration Patterns](articles/2026-05-29-multi-agent-ai-orchestration-patterns.md) - *2026-05-29*
-- [Automated Machine Learning For Computer Vision](articles/2026-05-27-automated-machine-learning-for-computer-vision.md) - *2026-05-27*
 <!-- ARTICLES_END -->
 
 ---
