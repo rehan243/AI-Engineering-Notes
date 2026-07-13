@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- [Multi-Agent AI Orchestration Patterns](articles/2026-07-13-multi-agent-ai-orchestration-patterns.md) — *2026-07-13*
 - [Clear topic name.](articles/2026-07-12-clear-topic-name.md) — *2026-07-12*
 - [Multi-Agent LLM Financial Trading Framework.](articles/2026-07-10-multi-agent-llm-financial-trading-framework.md) — *2026-07-10*
 - [<clear topic name>](articles/2026-07-09-clear-topic-name.md) — *2026-07-09*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Fine Tuning Open Source Llms For Proprietary Use C](articles/2026-06-07-fine-tuning-open-source-llms-for-proprietary-use-c.md) - *2026-06-07*
 - [Automated Evaluation And Monitoring Of Llms In Pro](articles/2026-06-07-automated-evaluation-and-monitoring-of-llms-in-pro.md) - *2026-06-07*
 - [Ai Safety And Alignment Engineering](articles/2026-05-31-ai-safety-and-alignment-engineering.md) - *2026-05-31*
-- [Real Time Model Serving With Gpus](articles/2026-05-30-real-time-model-serving-with-gpus.md) - *2026-05-30*
 <!-- ARTICLES_END -->
 
 ---
