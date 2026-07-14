@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- [Production RAG Pipelines with Re-ranking](articles/2026-07-14-production-rag-pipelines-with-re-ranking.md) — *2026-07-14*
 - [Model Context Protocol and Tool Use](articles/2026-07-13-model-context-protocol-and-tool-use.md) — *2026-07-13*
 - [Multi-Agent AI Orchestration Patterns](articles/2026-07-13-multi-agent-ai-orchestration-patterns.md) — *2026-07-13*
 - [Clear topic name.](articles/2026-07-12-clear-topic-name.md) — *2026-07-12*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Real World Applications Of Reinforcement Learning ](articles/2026-06-10-real-world-applications-of-reinforcement-learning-.md) - *2026-06-10*
 - [Real Time Data Streams For Ml Model Training](articles/2026-06-09-real-time-data-streams-for-ml-model-training.md) - *2026-06-09*
 - [Fine Tuning Open Source Llms For Proprietary Use C](articles/2026-06-07-fine-tuning-open-source-llms-for-proprietary-use-c.md) - *2026-06-07*
-- [Automated Evaluation And Monitoring Of Llms In Pro](articles/2026-06-07-automated-evaluation-and-monitoring-of-llms-in-pro.md) - *2026-06-07*
 <!-- ARTICLES_END -->
 
 ---
