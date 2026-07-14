@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- [LLM Fine-Tuning at Scale with LoRA](articles/2026-07-14-llm-fine-tuning-at-scale-with-lora.md) — *2026-07-14*
 - [Production RAG Pipelines with Re-ranking](articles/2026-07-14-production-rag-pipelines-with-re-ranking.md) — *2026-07-14*
 - [Model Context Protocol and Tool Use](articles/2026-07-13-model-context-protocol-and-tool-use.md) — *2026-07-13*
 - [Multi-Agent AI Orchestration Patterns](articles/2026-07-13-multi-agent-ai-orchestration-patterns.md) — *2026-07-13*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Automl For Tabular Data](articles/2026-06-20-automl-for-tabular-data.md) - *2026-06-20*
 - [Real World Applications Of Reinforcement Learning ](articles/2026-06-10-real-world-applications-of-reinforcement-learning-.md) - *2026-06-10*
 - [Real Time Data Streams For Ml Model Training](articles/2026-06-09-real-time-data-streams-for-ml-model-training.md) - *2026-06-09*
-- [Fine Tuning Open Source Llms For Proprietary Use C](articles/2026-06-07-fine-tuning-open-source-llms-for-proprietary-use-c.md) - *2026-06-07*
 <!-- ARTICLES_END -->
 
 ---
