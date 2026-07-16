@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- [Graph RAG and Knowledge Graphs for LLMs](articles/2026-07-16-graph-rag-and-knowledge-graphs-for-llms.md) — *2026-07-16*
 - [Model Context Protocol and Tool Use](articles/2026-07-15-model-context-protocol-and-tool-use.md) — *2026-07-15*
 - [Agentic Coding Assistants Architecture](articles/2026-07-15-agentic-coding-assistants-architecture.md) — *2026-07-15*
 - [LLM Fine-Tuning at Scale with LoRA](articles/2026-07-14-llm-fine-tuning-at-scale-with-lora.md) — *2026-07-14*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Automl For Complex High Dimensional Data](articles/2026-06-26-automl-for-complex-high-dimensional-data.md) - *2026-06-26*
 - [Real Time Time Series Forecasting With Streaming D](articles/2026-06-24-real-time-time-series-forecasting-with-streaming-d.md) - *2026-06-24*
 - [Explainable Ai For Model Debugging And Trust](articles/2026-06-21-explainable-ai-for-model-debugging-and-trust.md) - *2026-06-21*
-- [Automl For Tabular Data](articles/2026-06-20-automl-for-tabular-data.md) - *2026-06-20*
 <!-- ARTICLES_END -->
 
 ---
