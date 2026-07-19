@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- ["Context Scaling in Robotic Policies with Dynamic Novel View Synthesis"](articles/2026-07-19-context-scaling-in-robotic-policies-with-dynamic.md) — *2026-07-19*
 - [Model Context Protocol and Tool Use](articles/2026-07-18-model-context-protocol-and-tool-use.md) — *2026-07-18*
 - [Multi-Agent AI Orchestration Patterns](articles/2026-07-18-multi-agent-ai-orchestration-patterns.md) — *2026-07-18*
 - [Graph RAG and Knowledge Graphs for LLMs](articles/2026-07-16-graph-rag-and-knowledge-graphs-for-llms.md) — *2026-07-16*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Production Rag Pipelines With Re Ranking](articles/2026-07-02-production-rag-pipelines-with-re-ranking.md) - *2026-07-02*
 - [Automated Machine Learning Automl For Time Serie](articles/2026-06-28-automated-machine-learning-automl-for-time-serie.md) - *2026-06-28*
 - [Real Time Data Quality Monitoring For Ml Systems](articles/2026-06-26-real-time-data-quality-monitoring-for-ml-systems.md) - *2026-06-26*
-- [Automl For Complex High Dimensional Data](articles/2026-06-26-automl-for-complex-high-dimensional-data.md) - *2026-06-26*
 <!-- ARTICLES_END -->
 
 ---
