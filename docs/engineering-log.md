@@ -6,3 +6,7 @@ Running notes on design decisions and lessons learned.
 ### 2026-07-15
 
 Discovered that deploying LoRA-based models with a large number of injected parameters significantly increases inference latency due to the overhead of model loading and parameter merging; balancing LoRA rank and batch size helped mitigate this. Also found that using FP16 precision during inference can cause subtle numerical issues with certain layers, so incorporating a small FP32 fallback for critical ops improved stability.
+
+### 2026-07-20
+
+Found that aggressively caching intermediate embeddings reduces API latency significantly but increases memory use and stale data risk, settled on a 15-minute TTL to balance freshness and performance. Learned that pipeline stages benefit from independent retries rather than a single monolithic retry, which avoids compounding delays on partial failures.
