@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- [<clear topic name>](articles/2026-07-21-clear-topic-name.md) — *2026-07-21*
 - [Real-Time AI Inference Optimization](articles/2026-07-20-real-time-ai-inference-optimization.md) — *2026-07-20*
 - ["Context Scaling in Robotic Policies with Dynamic Novel View Synthesis"](articles/2026-07-19-context-scaling-in-robotic-policies-with-dynamic.md) — *2026-07-19*
 - [Model Context Protocol and Tool Use](articles/2026-07-18-model-context-protocol-and-tool-use.md) — *2026-07-18*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Real Time Ai Inference Optimization](articles/2026-07-05-real-time-ai-inference-optimization.md) - *2026-07-05*
 - [Multi Agent Llm Systems For Workflow Automation](articles/2026-07-04-multi-agent-llm-systems-for-workflow-automation.md) - *2026-07-04*
 - [Production Rag Pipelines With Re Ranking](articles/2026-07-02-production-rag-pipelines-with-re-ranking.md) - *2026-07-02*
-- [Automated Machine Learning Automl For Time Serie](articles/2026-06-28-automated-machine-learning-automl-for-time-serie.md) - *2026-06-28*
 <!-- ARTICLES_END -->
 
 ---
