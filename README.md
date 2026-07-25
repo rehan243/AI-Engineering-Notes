@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- [Multi-Agent AI Orchestration Patterns](articles/2026-07-25-multi-agent-ai-orchestration-patterns.md) — *2026-07-25*
 - [Agentic Coding Assistants Architecture](articles/2026-07-25-agentic-coding-assistants-architecture.md) — *2026-07-25*
 - [clear topic name](articles/2026-07-24-clear-topic-name.md) — *2026-07-24*
 - [Unified Fine-Tuning Across LLMs and Vision-Language Models (VLMs)](articles/2026-07-23-unified-fine-tuning-across-llms-and-vision.md) — *2026-07-23*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Clear topic name.](articles/2026-07-12-clear-topic-name.md) — *2026-07-12*
 - [Multi-Agent LLM Financial Trading Framework.](articles/2026-07-10-multi-agent-llm-financial-trading-framework.md) — *2026-07-10*
 - [<clear topic name>](articles/2026-07-09-clear-topic-name.md) — *2026-07-09*
-- [clear topic name](articles/2026-07-08-clear-topic-name.md) — *2026-07-08*
 <!-- ARTICLES_END -->
 
 ---
