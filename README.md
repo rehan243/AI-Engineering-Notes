@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- [Agentic Coding Assistants Architecture](articles/2026-07-25-agentic-coding-assistants-architecture.md) — *2026-07-25*
 - [clear topic name](articles/2026-07-24-clear-topic-name.md) — *2026-07-24*
 - [Unified Fine-Tuning Across LLMs and Vision-Language Models (VLMs)](articles/2026-07-23-unified-fine-tuning-across-llms-and-vision.md) — *2026-07-23*
 - [SuperAgents for Long-Horizon Multi-Tasking](articles/2026-07-23-superagents-for-long-horizon-multi-tasking.md) — *2026-07-23*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Multi-Agent LLM Financial Trading Framework.](articles/2026-07-10-multi-agent-llm-financial-trading-framework.md) — *2026-07-10*
 - [<clear topic name>](articles/2026-07-09-clear-topic-name.md) — *2026-07-09*
 - [clear topic name](articles/2026-07-08-clear-topic-name.md) — *2026-07-08*
-- [Fine Tuning And Serving Tiny Llms 1B Parameters](articles/2026-07-07-fine-tuning-and-serving-tiny-llms-1b-parameters.md) - *2026-07-07*
 <!-- ARTICLES_END -->
 
 ---
