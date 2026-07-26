@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- [Graph RAG and Knowledge Graphs for LLMs](articles/2026-07-26-graph-rag-and-knowledge-graphs-for-llms.md) — *2026-07-26*
 - [Multi-Agent AI Orchestration Patterns](articles/2026-07-25-multi-agent-ai-orchestration-patterns.md) — *2026-07-25*
 - [Agentic Coding Assistants Architecture](articles/2026-07-25-agentic-coding-assistants-architecture.md) — *2026-07-25*
 - [clear topic name](articles/2026-07-24-clear-topic-name.md) — *2026-07-24*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Multi-Agent AI Orchestration Patterns](articles/2026-07-13-multi-agent-ai-orchestration-patterns.md) — *2026-07-13*
 - [Clear topic name.](articles/2026-07-12-clear-topic-name.md) — *2026-07-12*
 - [Multi-Agent LLM Financial Trading Framework.](articles/2026-07-10-multi-agent-llm-financial-trading-framework.md) — *2026-07-10*
-- [<clear topic name>](articles/2026-07-09-clear-topic-name.md) — *2026-07-09*
 <!-- ARTICLES_END -->
 
 ---
