@@ -14,3 +14,7 @@ Found that aggressively caching intermediate embeddings reduces API latency sign
 ### 2026-07-25
 
 During deployment of a LoRA fine-tuned model with dynamic batching, I observed that increasing batch size beyond 8 caused GPU memory spillovers due to unsynchronized gradient accumulation. Lowering the batch size or enabling gradient checkpointing resolved the issue without significant latency impact, highlighting the tradeoff between throughput and memory footprint in production setups.
+
+### 2026-07-27
+
+Noticed that chaining multiple LLM calls in a single request pipeline adds significant latency and increases failure points; batching simpler tasks or combining prompts where possible reduces overhead. Also, using LoRA fine-tuning with QLoRA compression helps keep model size manageable without a major accuracy hit, but tuning hyperparameters carefully is crucial to avoid convergence issues.
