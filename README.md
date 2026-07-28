@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- [High-Performance Local LLM Inference & Agentic Workflows](articles/2026-07-28-high-performance-local-llm-inference-agentic.md) — *2026-07-28*
 - [Hybrid RAG Architectures for Production Workloads](articles/2026-07-27-hybrid-rag-architectures-for-production-workloads.md) — *2026-07-27*
 - [Graph RAG and Knowledge Graphs for LLMs](articles/2026-07-26-graph-rag-and-knowledge-graphs-for-llms.md) — *2026-07-26*
 - [Multi-Agent AI Orchestration Patterns](articles/2026-07-25-multi-agent-ai-orchestration-patterns.md) — *2026-07-25*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Production RAG Pipelines with Re-ranking](articles/2026-07-14-production-rag-pipelines-with-re-ranking.md) — *2026-07-14*
 - [Model Context Protocol and Tool Use](articles/2026-07-13-model-context-protocol-and-tool-use.md) — *2026-07-13*
 - [Multi-Agent AI Orchestration Patterns](articles/2026-07-13-multi-agent-ai-orchestration-patterns.md) — *2026-07-13*
-- [Clear topic name.](articles/2026-07-12-clear-topic-name.md) — *2026-07-12*
 <!-- ARTICLES_END -->
 
 ---
