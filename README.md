@@ -15,6 +15,7 @@ Author: [Rehan Malik](https://github.com/rehan243)
 ## Articles
 
 <!-- ARTICLES_START -->
+- [Production RAG Pipelines with Re-ranking](articles/2026-07-30-production-rag-pipelines-with-re-ranking.md) — *2026-07-30*
 - [Production RAG Pipelines with Re-ranking](articles/2026-07-29-production-rag-pipelines-with-re-ranking.md) — *2026-07-29*
 - [High-Performance Local LLM Inference & Agentic Workflows](articles/2026-07-28-high-performance-local-llm-inference-agentic.md) — *2026-07-28*
 - [Hybrid RAG Architectures for Production Workloads](articles/2026-07-27-hybrid-rag-architectures-for-production-workloads.md) — *2026-07-27*
@@ -34,7 +35,6 @@ Author: [Rehan Malik](https://github.com/rehan243)
 - [Agentic Coding Assistants Architecture](articles/2026-07-15-agentic-coding-assistants-architecture.md) — *2026-07-15*
 - [LLM Fine-Tuning at Scale with LoRA](articles/2026-07-14-llm-fine-tuning-at-scale-with-lora.md) — *2026-07-14*
 - [Production RAG Pipelines with Re-ranking](articles/2026-07-14-production-rag-pipelines-with-re-ranking.md) — *2026-07-14*
-- [Model Context Protocol and Tool Use](articles/2026-07-13-model-context-protocol-and-tool-use.md) — *2026-07-13*
 <!-- ARTICLES_END -->
 
 ---
