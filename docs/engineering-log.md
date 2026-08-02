@@ -18,3 +18,7 @@ During deployment of a LoRA fine-tuned model with dynamic batching, I observed t
 ### 2026-07-27
 
 Noticed that chaining multiple LLM calls in a single request pipeline adds significant latency and increases failure points; batching simpler tasks or combining prompts where possible reduces overhead. Also, using LoRA fine-tuning with QLoRA compression helps keep model size manageable without a major accuracy hit, but tuning hyperparameters carefully is crucial to avoid convergence issues.
+
+### 2026-08-02
+
+Reviewed production AI engineering patterns and lessons learned today. Reinforced that measuring the change end-to-end beats reasoning about it in isolation — the numbers rarely match the intuition.
