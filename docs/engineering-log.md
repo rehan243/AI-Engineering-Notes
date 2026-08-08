@@ -22,3 +22,7 @@ Noticed that chaining multiple LLM calls in a single request pipeline adds signi
 ### 2026-08-02
 
 Reviewed production AI engineering patterns and lessons learned today. Reinforced that measuring the change end-to-end beats reasoning about it in isolation — the numbers rarely match the intuition.
+
+### 2026-08-08
+
+Reviewed production AI engineering patterns and lessons learned today. Reinforced that measuring the change end-to-end beats reasoning about it in isolation — the numbers rarely match the intuition.
