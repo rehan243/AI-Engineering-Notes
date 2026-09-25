@@ -70,3 +70,7 @@ Reviewed production AI engineering patterns and lessons learned today. Reinforce
 ### 2026-09-24
 
 Reviewed production AI engineering patterns and lessons learned today. Reinforced that measuring the change end-to-end beats reasoning about it in isolation — the numbers rarely match the intuition.
+
+### 2026-09-25
+
+Reviewed production AI engineering patterns and lessons learned today. Reinforced that measuring the change end-to-end beats reasoning about it in isolation — the numbers rarely match the intuition.
